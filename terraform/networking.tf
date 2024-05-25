@@ -18,7 +18,7 @@ resource "aws_subnet" "toto_pub_subnet_1" {
   cidr_block = "10.0.0.0/25"
 
   tags = {
-    Name = format("toto-%s-pub-subnet-1")
+    Name = format("toto-%s-pub-subnet-1", var.toto_environment)
   }
 }
 
@@ -27,6 +27,6 @@ resource "aws_subnet" "toto_pub_subnet_2" {
   cidr_block = "10.0.0.128/25"
 
   tags = {
-    Name = format("toto-%s-pub-subnet-2")
+    Name = format("toto-%s-pub-subnet-2", var.toto_environment)
   }
 }
