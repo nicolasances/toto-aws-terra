@@ -6,6 +6,6 @@ resource "aws_vpc" "totovpc" {
   instance_tenancy = "default"
 
   tags = {
-    Name = "totovpc"
+    Name = format("toto-%s-vpc", var.toto_environment)
   }
 }

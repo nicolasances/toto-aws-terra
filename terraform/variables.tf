@@ -12,3 +12,11 @@ variable "aws_secret_access_key" {
   type = string
   sensitive = true
 }
+
+########################################################
+# 2. Toto Environment
+########################################################
+variable "toto_environment" {
+  description = "Toto Environment (dev, prod, etc..)"
+  type = string
+}
