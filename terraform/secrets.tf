@@ -6,6 +6,6 @@ resource "aws_secretsmanager_secret" "jwt_signing_key" {
   description = format("Key to sign Toto JWT Tokens in %s environment", var.toto_environment)
 }
 resource "aws_secretsmanager_secret_version" "jwt_signing_key" {
-  secret_id = aws_secretsmanager_secret.secret_jwt_signing_key.id
+  secret_id = aws_secretsmanager_secret.jwt_signing_key.id
   secret_string = var.jwt_signing_key
 }
