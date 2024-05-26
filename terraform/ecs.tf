@@ -1,6 +1,7 @@
 ########################################################
 # 1. IAM Roles for ECS Tasks
 ########################################################
+# 1.1. Task Execution Role
 resource "aws_iam_role" "toto_ecs_task_execution_role" {
   name = format("toto-ecs-task-execution-role-%s", var.toto_environment)
   assume_role_policy = jsonencode({

@@ -31,3 +31,4 @@ Sources:
 ### What IAM roles are needed by Toto Terraform?
 * `AmazonVPCFullAccess` to give Terraform the right to create and manage VPCs
 * `SecretsManagerReadWrite` to write Secrets to AWS Secrets Manager
+* `IAMFullAccess` to allow Terraform to create IAM Roles, Users, Groups, etc..
