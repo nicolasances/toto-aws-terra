@@ -30,3 +30,14 @@ resource "aws_subnet" "toto_pub_subnet_2" {
     Name = format("toto-%s-pub-subnet-2", var.toto_environment)
   }
 }
+
+########################################################
+# 3. Internet Gateway
+########################################################
+resource "aws_internet_gateway" "igw" {
+  vpc_id = aws_vpc.toto_vpc.id
+  
+  tags = {
+    Name = format("toto-%s-igw", var.toto_environment)
+  }
+}

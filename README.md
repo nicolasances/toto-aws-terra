@@ -27,3 +27,7 @@ On [Terraform Cloud](https://app.terraform.io), in my project, I created the fol
 
 Sources: 
 * https://registry.terraform.io/providers/hashicorp/aws/latest/docs#authentication-and-configuration
+
+### What IAM roles are needed by Toto Terraform?
+* `AmazonVPCFullAccess` to give Terraform the right to create and manage VPCs
+* `SecretsManagerReadWrite` to write Secrets to AWS Secrets Manager
