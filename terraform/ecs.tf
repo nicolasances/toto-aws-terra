@@ -48,3 +48,15 @@ resource "aws_iam_role_policy_attachment" "ecs_task_role_secrets_manager" {
   role = aws_iam_role.toto_ecs_task_role.name
   policy_arn = "arn:aws:iam::aws:policy/SecretsManagerReadWrite"
 }
+
+########################################################
+# 2. Cluster
+########################################################
+resource "aws_ecs_cluster" "ecs_cluster" {
+  name = format("toto-%s", var.toto_environment)
+}
+
+resource "aws_ecs_cluster_capacity_providers" "ecs_cluster_capacity_providers" {
+  cluster_name = aws_ecs_cluster.ecs_cluster.name
+  capacity_providers = ["FARGATE"]
+}
