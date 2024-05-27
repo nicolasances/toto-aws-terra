@@ -16,6 +16,7 @@ resource "aws_vpc" "toto_vpc" {
 resource "aws_subnet" "toto_pub_subnet_1" {
   vpc_id = aws_vpc.toto_vpc.id
   cidr_block = "10.0.0.0/25"
+  availability_zone = "eu-west-1a"
 
   tags = {
     Name = format("toto-%s-pub-subnet-1", var.toto_environment)
@@ -25,6 +26,7 @@ resource "aws_subnet" "toto_pub_subnet_1" {
 resource "aws_subnet" "toto_pub_subnet_2" {
   vpc_id = aws_vpc.toto_vpc.id
   cidr_block = "10.0.0.128/25"
+  availability_zone = "eu-west-1b"
 
   tags = {
     Name = format("toto-%s-pub-subnet-2", var.toto_environment)
@@ -64,4 +66,13 @@ resource "aws_route_table_association" "route_table_subnet_1" {
 resource "aws_route_table_association" "route_table_subnet_2" {
   subnet_id = aws_subnet.toto_pub_subnet_2.id
   route_table_id = aws_route_table.route_table.id
+}
+
+
+########################################################
+# 5. Load Balancer
+########################################################
+resource "aws_elb" "toto_alb" {
+  name = format("toto-alb-%s", var.toto_environment)
+  availability_zones = 
 }
