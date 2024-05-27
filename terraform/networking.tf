@@ -72,7 +72,3 @@ resource "aws_route_table_association" "route_table_subnet_2" {
 ########################################################
 # 5. Load Balancer
 ########################################################
-resource "aws_elb" "toto_alb" {
-  name = format("toto-alb-%s", var.toto_environment)
-  availability_zones = 
-}
