@@ -72,3 +72,15 @@ resource "aws_route_table_association" "route_table_subnet_2" {
 ########################################################
 # 5. Load Balancer
 ########################################################
+resource "aws_elb" "toto_alb" {
+  name = format("toto-alb-%s", var.toto_environment)
+  subnets = [aws_subnet.toto_pub_subnet_1.id, aws_subnet.toto_pub_subnet_2]
+  security_groups = [ aws_security_group.toto_open_service.id ]
+
+  listener {
+    lb_port = "80"
+    lb_protocol = "http"
+    instance_port = "8080"
+    instance_protocol = "http"
+  }
+}
