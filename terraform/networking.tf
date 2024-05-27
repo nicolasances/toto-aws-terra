@@ -74,7 +74,7 @@ resource "aws_route_table_association" "route_table_subnet_2" {
 ########################################################
 resource "aws_elb" "toto_alb" {
   name = format("toto-alb-%s", var.toto_environment)
-  subnets = [aws_subnet.toto_pub_subnet_1.id, aws_subnet.toto_pub_subnet_2]
+  subnets = [aws_subnet.toto_pub_subnet_1.id, aws_subnet.toto_pub_subnet_2.id]
   security_groups = [ aws_security_group.toto_open_service.id ]
 
   listener {
