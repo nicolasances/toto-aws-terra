@@ -12,7 +12,7 @@ resource "aws_iam_role" "toto_ecs_task_execution_role" {
         Effect = "Allow"
         Sid    = ""
         Principal = {
-          Service = "ecs.amazonaws.com"
+          Service = "ecs-tasks.amazonaws.com"
         }
       },
     ]
