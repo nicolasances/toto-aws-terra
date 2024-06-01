@@ -25,3 +25,12 @@ variable "jwt_signing_key" {
     type = string
     sensitive = true
 }
+
+########################################################
+# 3. Github Core Variables
+########################################################
+variable "github_token" {
+  description = "Github PAT for Terraform to use"
+  type = string
+  sensitive = true
+}
