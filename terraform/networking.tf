@@ -81,7 +81,7 @@ resource "aws_lb" "toto_alb" {
 }
 
 resource "aws_lb_listener" "toto_alb_listener" {
-  load_balancer_arn = aws_elb.toto_alb.arn
+  load_balancer_arn = aws_lb.toto_alb.arn
   port = "80"
   protocol = "HTTP"
 
