@@ -13,6 +13,12 @@ variable "aws_secret_access_key" {
   sensitive = true
 }
 
+variable "aws_route53_zone_id" {
+  description = "AWS Route 53 Zone ID to be used"
+  type = string
+  sensitive = true
+}
+
 ########################################################
 # 2. Toto Environment & Core Variables
 ########################################################
