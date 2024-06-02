@@ -34,13 +34,13 @@ resource "github_actions_environment_secret" "alb_listener_arn_secret" {
 resource "github_actions_environment_secret" "alb_dns_name_ghsecret" {
     repository = data.github_repository.toto_py_service_repo.name
     environment = var.toto_environment
-    secret_name = "route53_zone_id"
+    secret_name = "alb_dns_name"
     plaintext_value = aws_lb.toto_alb.dns_name
 }
 resource "github_actions_environment_secret" "alb_zone_id_ghsecret" {
     repository = data.github_repository.toto_py_service_repo.name
     environment = var.toto_environment
-    secret_name = "route53_zone_id"
+    secret_name = "alb_zone_id"
     plaintext_value = aws_lb.toto_alb.zone_id
 }
 resource "github_actions_environment_secret" "route53_zone_id_ghsecret" {
