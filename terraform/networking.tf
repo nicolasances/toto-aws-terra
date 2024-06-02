@@ -72,15 +72,25 @@ resource "aws_route_table_association" "route_table_subnet_2" {
 ########################################################
 # 5. Load Balancer
 ########################################################
-resource "aws_elb" "toto_alb" {
+resource "aws_lb" "toto_alb" {
   name = format("toto-alb-%s", var.toto_environment)
-  subnets = [aws_subnet.toto_pub_subnet_1.id, aws_subnet.toto_pub_subnet_2.id]
+  internal = false
+  load_balancer_type = "application"
   security_groups = [ aws_security_group.toto_open_service.id ]
+  subnets = [aws_subnet.toto_pub_subnet_1.id, aws_subnet.toto_pub_subnet_2.id]
+}
 
-  listener {
-    lb_port = "80"
-    lb_protocol = "http"
-    instance_port = "8080"
-    instance_protocol = "http"
+resource "aws_lb_listener" "toto_alb_listener" {
+  load_balancer_arn = aws_elb.toto_alb.arn
+  port = "80"
+  protocol = "HTTP"
+
+  default_action {
+    type = "fixed-response"
+    fixed_response {
+      content_type = "application/json"
+      message_body = "{\"active\": \"true\"}"
+      status_code = "200"
+    }
   }
 }

@@ -10,6 +10,7 @@ Toto Terraform modules need **at least** the following variables:
 * `aws_access_key`: AWS Access Key for the Toto Terraform User
 * `aws_secret_access_key`: AWS Secret Access Key for the Toto Terraform User
 * `jwt_signing_key`: The key used by Toto to sign JWT Tokens
+* `github_token`: The PAT token to be used to manage Github Repos
 
 ### 2. Create a User and User Group on AWS IAM
 Create a new User and a User Group for the Terraform User. <br>

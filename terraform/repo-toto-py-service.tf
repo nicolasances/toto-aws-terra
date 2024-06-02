@@ -25,3 +25,9 @@ resource "github_actions_environment_secret" "ecs_security_group" {
     secret_name = "ecs_security_group"
     plaintext_value = aws_security_group.toto_open_service.id
 }
+resource "github_actions_environment_secret" "alb_listener_arn_secret" {
+    repository = data.github_repository.toto_py_service_repo.name
+    environment = var.toto_environment
+    secret_name = "alb_listener_arn"
+    plaintext_value = aws_lb_
+}
