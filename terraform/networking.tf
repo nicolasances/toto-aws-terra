@@ -94,3 +94,17 @@ resource "aws_lb_listener" "toto_alb_listener" {
     }
   }
 }
+resource "aws_lb_listener" "toto_alb_listener_https" {
+  load_balancer_arn = aws_lb.toto_alb.arn
+  port = "443"
+  protocol = "HTTPS"
+
+  default_action {
+    type = "fixed-response"
+    fixed_response {
+      content_type = "application/json"
+      message_body = "{\"active\": \"true\"}"
+      status_code = "200"
+    }
+  }
+}

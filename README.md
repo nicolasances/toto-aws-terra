@@ -35,3 +35,4 @@ Sources:
 * `IAMFullAccess` to allow Terraform to create IAM Roles, Users, Groups, etc..
 * `AmazonECS_FullAccess` to allow Terraform to manage ECS resources
 * `ElasticLoadBalancingFullAccess` to allow Terraform to manage Load Balancers
+* `AmazonRoute53FullAccess` to allow Terraform to manage Route53 
