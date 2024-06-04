@@ -98,7 +98,7 @@ resource "aws_lb_listener" "toto_alb_listener_https" {
   load_balancer_arn = aws_lb.toto_alb.arn
   port = "443"
   protocol = "HTTPS"
-  certificate_arn = var.certificate_arn
+  certificate_arn = aws_acm_certificate.toto_certificate.arn
 
   default_action {
     type = "fixed-response"
