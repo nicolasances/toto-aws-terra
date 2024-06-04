@@ -37,6 +37,10 @@ variable "jwt_signing_key" {
     type = string
     sensitive = true
 }
+variable "toto_domain_name" {
+  description = "The Domain name used by Toto"
+  type = string
+}
 
 ########################################################
 # 3. Github Core Variables

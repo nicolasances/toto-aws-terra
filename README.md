@@ -36,6 +36,15 @@ If you have a Domain in Route 53, you can attach a certificate to that domain.
 For that, you can use Certificate Manager > Request Certificate. <br>
 Once a certificate has been requested, you can go in the "Certificate Details" page and "Create records in Route 53" so that the DNS records to validate the certificate will be created. <br>
 
+#### Common error on TLS: Hostname/IP does not match certificate’s altnames
+The first time I requested the Certificate in *Certificate Manager*, in the field *Fully qualified domain name* I only registered the base domain (e.g. *to7o.com*). <br>
+The problem is that then, when using Postman to call the API hosted on `https://api.dev.toto.aws.to7o.com/` I got the error `SSL error: Hostname/IP does not match certificate’s altnames`. <br>
+
+After searching a bit, I found that this was due to the fact that the Certificate had to perfectly match the **full hostname** to the Certificate's *altnames* (the *fully qualified domain names* inserted in the certificate request).
+
+> After requesting a certificate with `api.dev.toto.aws.to7o.com` as one of the fully qualified domain names, everything worked fine. <br>
+
+*Note: Using wildcards (*.to7o.com) is NOT possible*.
 
 ### What IAM roles are needed by Toto Terraform?
 * `AmazonVPCFullAccess` to give Terraform the right to create and manage VPCs
