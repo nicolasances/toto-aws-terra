@@ -19,6 +19,12 @@ variable "aws_route53_zone_id" {
   sensitive = true
 }
 
+variable "certificate_arn" {
+  description = "ARN of the Certificate to use for HTTPS"
+  type = string
+  sensitive = true
+}
+
 ########################################################
 # 2. Toto Environment & Core Variables
 ########################################################
