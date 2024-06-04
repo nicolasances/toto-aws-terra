@@ -11,6 +11,7 @@ Toto Terraform modules need **at least** the following variables:
 * `aws_secret_access_key`: AWS Secret Access Key for the Toto Terraform User
 * `jwt_signing_key`: The key used by Toto to sign JWT Tokens
 * `github_token`: The PAT token to be used to manage Github Repos
+* `certificate_arn`: The ARN of the Certificate that should be used for all HTTPS communications. 
 
 ### 2. Create a User and User Group on AWS IAM
 Create a new User and a User Group for the Terraform User. <br>
@@ -28,6 +29,13 @@ On [Terraform Cloud](https://app.terraform.io), in my project, I created the fol
 
 Sources: 
 * https://registry.terraform.io/providers/hashicorp/aws/latest/docs#authentication-and-configuration
+
+### 3. How to get a Certificate? 
+If you have a Domain in Route 53, you can attach a certificate to that domain. 
+
+For that, you can use Certificate Manager > Request Certificate. <br>
+Once a certificate has been requested, you can go in the "Certificate Details" page and "Create records in Route 53" so that the DNS records to validate the certificate will be created. <br>
+
 
 ### What IAM roles are needed by Toto Terraform?
 * `AmazonVPCFullAccess` to give Terraform the right to create and manage VPCs
