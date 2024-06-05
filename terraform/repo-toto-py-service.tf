@@ -29,7 +29,7 @@ resource "github_actions_environment_secret" "alb_listener_arn_secret" {
     repository = data.github_repository.toto_py_service_repo.name
     environment = var.toto_environment
     secret_name = "alb_listener_arn"
-    plaintext_value = aws_lb_listener.toto_alb_listener.arn
+    plaintext_value = aws_lb_listener.toto_alb_listener_https.arn
 }
 resource "github_actions_environment_secret" "alb_dns_name_ghsecret" {
     repository = data.github_repository.toto_py_service_repo.name
