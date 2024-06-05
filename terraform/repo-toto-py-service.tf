@@ -49,3 +49,21 @@ resource "github_actions_environment_secret" "route53_zone_id_ghsecret" {
     secret_name = "route53_zone_id"
     plaintext_value = var.aws_route53_zone_id
 }
+resource "github_actions_environment_secret" "ecs_execution_role_arn_ghsecret" {
+    repository = data.github_repository.toto_py_service_repo.name
+    environment = var.toto_environment
+    secret_name = "ecs_execution_role_arn"
+    plaintext_value = aws_iam_role.toto_ecs_task_execution_role.arn
+}
+resource "github_actions_environment_secret" "ecs_task_role_arn_ghsecret" {
+    repository = data.github_repository.toto_py_service_repo.name
+    environment = var.toto_environment
+    secret_name = "ecs_task_role_arn"
+    plaintext_value = aws_iam_role.toto_ecs_task_role.arn
+}
+resource "github_actions_environment_secret" "ecs_cluster_arn_ghsecret" {
+    repository = data.github_repository.toto_py_service_repo.name
+    environment = var.toto_environment
+    secret_name = "ecs_cluster_arn"
+    plaintext_value = aws_ecs_cluster.ecs_cluster.arn
+}
