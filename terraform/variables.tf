@@ -44,3 +44,11 @@ variable "github_token" {
   type = string
   sensitive = true
 }
+########################################################
+# 4. Terraform API Token
+########################################################
+variable "tf_api_token" {
+  description = "Terraform API Token to be provided to Microservices repos as Secret"
+  type = string
+  sensitive = true
+}
