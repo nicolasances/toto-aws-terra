@@ -110,3 +110,9 @@ resource "github_actions_environment_secret" "tf_api_token_ghsecret" {
     secret_name = "TF_API_TOKEN"
     plaintext_value = var.tf_api_token
 }
+resource "github_actions_environment_secret" "tf_workspace_ghsecret" {
+    repository = data.github_repository.toto_py_service_repo.name
+    environment = var.toto_environment
+    secret_name = "TF_WORKSPACE"
+    plaintext_value = format("aws-py-service-%s", var.toto_environment)
+}
