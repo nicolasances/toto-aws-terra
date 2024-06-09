@@ -7,6 +7,12 @@
 data "github_repository" "toto_py_test_service_gh_repo" {
     full_name = "nicolasances/toto-py-test"
 }
+
+resource "github_repository_environment" "toto_py_test_gh_env" {
+    repository = data.github_repository.toto_py_test_service_gh_repo.name
+    environment = var.toto_environment
+  
+}
 ########################################################
 # 1.1. Subnets
 ########################################################
