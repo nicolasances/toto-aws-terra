@@ -108,7 +108,16 @@ resource "github_actions_environment_secret" "toto_py_test_aws_secret_access_key
 }
 
 ########################################################
-# 1.3. Terraform API Token
+# 1.8. ECR
+########################################################
+resource "github_actions_environment_secret" "toto_py_test_ecr_repo" {
+    repository = data.github_repository.toto_py_test_service_gh_repo.name
+    environment = var.toto_environment
+    secret_name = "ECR_REPO"
+    plaintext_value = "toto-py-test"
+}
+########################################################
+# 1.9. Terraform API Token
 ########################################################
 resource "github_actions_environment_secret" "toto_py_test_tf_api_token_ghsecret" {
     repository = data.github_repository.toto_py_test_service_gh_repo.name

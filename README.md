@@ -47,9 +47,11 @@ After searching a bit, I found that this was due to the fact that the Certificat
 *Note: Using wildcards (*.to7o.com) is NOT possible*.
 
 ### What IAM roles are needed by Toto Terraform?
-* `AmazonVPCFullAccess` to give Terraform the right to create and manage VPCs
-* `SecretsManagerReadWrite` to write Secrets to AWS Secrets Manager
-* `IAMFullAccess` to allow Terraform to create IAM Roles, Users, Groups, etc..
+* `AmazonEC2ContainerRegistryFullAccess` to allow Terraform to create and manage an ECR private repo
 * `AmazonECS_FullAccess` to allow Terraform to manage ECS resources
-* `ElasticLoadBalancingFullAccess` to allow Terraform to manage Load Balancers
 * `AmazonRoute53FullAccess` to allow Terraform to manage Route53 
+* `AmazonVPCFullAccess` to give Terraform the right to create and manage VPCs
+* `AWSCertificateManagerFullAccess` to allow Terraform to provision certificates 
+* `ElasticLoadBalancingFullAccess` to allow Terraform to manage Load Balancers
+* `IAMFullAccess` to allow Terraform to create IAM Roles, Users, Groups, etc..
+* `SecretsManagerReadWrite` to write Secrets to AWS Secrets Manager
