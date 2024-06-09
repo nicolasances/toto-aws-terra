@@ -14,8 +14,14 @@ resource "github_repository_environment" "toto_py_test_gh_env" {
   
 }
 ########################################################
-# 1.1. Subnets
+# 1.1. VPC and Subnets
 ########################################################
+resource "github_actions_environment_secret" "toto_py_test_toto_vpc_id" {
+    repository = data.github_repository.toto_py_test_service_gh_repo.name
+    environment = var.toto_environment
+    secret_name = "toto_vpc_id"
+    plaintext_value = aws_vpc.toto_vpc.id
+}
 resource "github_actions_environment_secret" "toto_py_test_ecs_subnet_1" {
     repository = data.github_repository.toto_py_test_service_gh_repo.name
     environment = var.toto_environment
