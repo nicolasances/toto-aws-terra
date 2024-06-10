@@ -19,6 +19,12 @@ variable "aws_route53_zone_id" {
   sensitive = true
 }
 
+variable "aws_account_id" {
+  description = "Account ID"
+  type = string
+  sensitive = true
+}
+
 ########################################################
 # 2. Toto Environment & Core Variables
 ########################################################
@@ -51,4 +57,11 @@ variable "tf_api_token" {
   description = "Terraform API Token to be provided to Microservices repos as Secret"
   type = string
   sensitive = true
+}
+########################################################
+# 5. Route 53 Domain
+########################################################
+variable "route53_zone_id" {
+  description = "Zone ID of the Route53 Hosted Zone"
+  type = string
 }

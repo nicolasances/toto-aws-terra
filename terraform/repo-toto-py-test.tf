@@ -98,7 +98,7 @@ resource "github_actions_environment_secret" "toto_py_test_ecs_cluster_arn_ghsec
     plaintext_value = aws_ecs_cluster.ecs_cluster.arn
 }
 ########################################################
-# 1.7. AWS Access Key and Secret Access Key
+# 1.7. AWS Account Access Key and Secret Access Key
 ########################################################
 resource "github_actions_environment_secret" "toto_py_test_aws_access_key_ghsecret" {
     repository = data.github_repository.toto_py_test_service_gh_repo.name
@@ -111,6 +111,12 @@ resource "github_actions_environment_secret" "toto_py_test_aws_secret_access_key
     environment = var.toto_environment
     secret_name = "AWS_SECRET_ACCESS_KEY"
     plaintext_value = var.aws_secret_access_key
+}
+resource "github_actions_environment_secret" "toto_py_test_aws_account_id_ghsecret" {
+    repository = data.github_repository.toto_py_test_service_gh_repo.name
+    environment = var.toto_environment
+    secret_name = "aws_account_id"
+    plaintext_value = var.aws_account_id
 }
 
 ########################################################
