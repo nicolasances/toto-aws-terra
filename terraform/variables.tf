@@ -58,10 +58,3 @@ variable "tf_api_token" {
   type = string
   sensitive = true
 }
-########################################################
-# 5. Route 53 Domain
-########################################################
-variable "route53_zone_id" {
-  description = "Zone ID of the Route53 Hosted Zone"
-  type = string
-}
