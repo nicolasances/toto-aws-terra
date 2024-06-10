@@ -17,7 +17,7 @@ resource "github_repository_environment" "gh_env" {
 # 1.1. VPC and Subnets
 ########################################################
 resource "github_actions_environment_secret" "toto_vpc_id" {
-    repository = data.github_repository.service_gh_repo.name
+    repository = "nicolasances/toto-py-test"
     environment = var.toto_environment
     secret_name = "toto_vpc_id"
     plaintext_value = var.toto_vpc_id

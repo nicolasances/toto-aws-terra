@@ -21,5 +21,4 @@ provider "aws" {
 # Configure the GitHub Provider
 provider "github" {
   token = var.github_token
-  owner = "nicolasances"
 }
