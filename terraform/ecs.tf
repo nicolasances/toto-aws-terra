@@ -23,6 +23,10 @@ resource "aws_iam_role_policy_attachment" "ecs_task_execution_role_policy_attach
   role = aws_iam_role.toto_ecs_task_execution_role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
+resource "aws_iam_role_policy_attachment" "ecs_task_execution_role_policy_attachment_cloudwatch" {
+  role = aws_iam_role.toto_ecs_task_execution_role.name
+  policy_arn = "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess"
+}
 
 # 1.2. Task Role
 # This is a generic role that ECS Microservices should use in the Task Definition
