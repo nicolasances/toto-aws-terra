@@ -18,9 +18,8 @@ variable "aws_route53_zone_id" {
   type = string
   sensitive = true
 }
-
 variable "aws_account_id" {
-  description = "Account ID"
+  description = "AWS Account Id"
   type = string
   sensitive = true
 }
