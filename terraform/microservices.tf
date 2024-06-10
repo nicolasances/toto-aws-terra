@@ -1,5 +1,5 @@
-module "toto-py-service" {
-  source = "./toto-py-service"
+module "toto-py-test" {
+  source = "./toto-py-test"
   
   alb_dns_name = aws_lb.toto_alb.dns_name
   alb_listener_arn = aws_lb_listener.toto_alb_listener_https.arn
