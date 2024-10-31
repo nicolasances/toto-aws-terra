@@ -144,5 +144,5 @@ resource "github_actions_environment_secret" "toto_ml_supito_tf_workspace_ghsecr
     repository = data.github_repository.toto_ml_supito_service_gh_repo.name
     environment = var.toto_environment
     secret_name = "TF_WORKSPACE"
-    plaintext_value = format("toto-python-ms-template-%s", var.toto_environment)
+    plaintext_value = format("toto-ml-supito-%s", var.toto_environment)
 }
