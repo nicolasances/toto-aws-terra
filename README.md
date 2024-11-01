@@ -50,6 +50,7 @@ After searching a bit, I found that this was due to the fact that the Certificat
 * `AmazonEC2ContainerRegistryFullAccess` to allow Terraform to create and manage an ECR private repo
 * `AmazonECS_FullAccess` to allow Terraform to manage ECS resources
 * `AmazonRoute53FullAccess` to allow Terraform to manage Route53 
+* `AmazonS3FullAccess` to allow Terraform to manage S3 buckets
 * `AmazonVPCFullAccess` to give Terraform the right to create and manage VPCs
 * `AWSCertificateManagerFullAccess` to allow Terraform to provision certificates 
 * `ElasticLoadBalancingFullAccess` to allow Terraform to manage Load Balancers
