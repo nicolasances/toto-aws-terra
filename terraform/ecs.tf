@@ -52,6 +52,10 @@ resource "aws_iam_role_policy_attachment" "ecs_task_role_secrets_manager" {
   role = aws_iam_role.toto_ecs_task_role.name
   policy_arn = "arn:aws:iam::aws:policy/SecretsManagerReadWrite"
 }
+resource "aws_iam_role_policy_attachment" "ecs_task_role_s3_full_access" {
+  role = aws_iam_role.toto_ecs_task_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
+}
 
 ########################################################
 # 2. Cluster
