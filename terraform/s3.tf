@@ -1,9 +1,9 @@
 resource "aws_s3_bucket" "toto_models_bucket" {
-    bucket = "toto-dev-models.to7o.com"
+    bucket = format("toto-%s-models.to7o.com", var.toto_environment)
     acl = "private"
 
     tags = {
         Name = "Toto Dev Models Bucket"
-        Environment = "dev"
+        Environment = var.toto_environment
     }
 }
