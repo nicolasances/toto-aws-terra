@@ -123,7 +123,7 @@ resource "github_actions_environment_secret" "toto_ml_supito_aws_account_id_ghse
 # 1.8. ECR
 ########################################################
 resource "aws_ecr_repository" "toto_ml_supito_ecr_private_repo" {
-  name = "toto-ml-supito"
+  name = format("toto-ml-supito-$s", var.toto_environment)
 }
 resource "github_actions_environment_secret" "toto_ml_supito_ecr_repo" {
     repository = data.github_repository.toto_ml_supito_service_gh_repo.name
