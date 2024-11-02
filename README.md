@@ -11,6 +11,7 @@ Toto Terraform modules need **at least** the following variables:
 * `aws_secret_access_key`: AWS Secret Access Key for the Toto Terraform User
 * `jwt_signing_key`: The key used by Toto to sign JWT Tokens
 * `github_token`: The PAT token to be used to manage Github Repos
+* `tf_api_token`: the Terraform API Token that will be used by Github actions to trigger Terraform runs (for microservices)
 * `certificate_arn`: The ARN of the Certificate that should be used for all HTTPS communications. 
 
 ### 2. Create a User and User Group on AWS IAM
@@ -31,6 +32,9 @@ Sources:
 * https://registry.terraform.io/providers/hashicorp/aws/latest/docs#authentication-and-configuration
 
 ### 3. How to get a Certificate? 
+First **important note**: You should only request one certificate for the base domain and create alt names for the subdomains needed. <br>
+*For example, I created one certificate to attach to `to7o.com` and registered alt names of `api.dev.toto.aws.to7o.com` and `api.prod.toto.aws.to7o.com`*
+
 If you have a Domain in Route 53, you can attach a certificate to that domain. 
 
 For that, you can use Certificate Manager > Request Certificate. <br>

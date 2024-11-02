@@ -3,7 +3,7 @@
 ########################################################
 resource "aws_route53_record" "dns_record" {
   zone_id = var.aws_route53_zone_id
-  name = "api.dev.toto.aws.to7o.com"
+  name = format("api.%s.toto.aws.to7o.com", var.toto_environment)
   type = "A"
 
   alias {
