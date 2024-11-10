@@ -12,6 +12,7 @@ Toto Terraform modules need **at least** the following variables:
 * `jwt_signing_key`: The key used by Toto to sign JWT Tokens
 * `github_token`: The PAT token to be used to manage Github Repos
 * `certificate_arn`: The ARN of the Certificate that should be used for all HTTPS communications. 
+* `gcp_service_account_key`: This variable must contain the content of the GCP Service Account JSON Key file that will (can) be used by AWS-deployed microservices to access GCP resources (e.g. GCS). 
 
 ### 2. Create a User and User Group on AWS IAM
 Create a new User and a User Group for the Terraform User. <br>
