@@ -146,3 +146,13 @@ resource "github_actions_environment_secret" "toto_ml_supito_tf_workspace_ghsecr
     secret_name = "TF_WORKSPACE"
     plaintext_value = format("toto-ml-supito-%s", var.toto_environment)
 }
+########################################################
+# 1.10 Google Application Credentials
+#      For services that need to access GCP Toto Infra 
+########################################################
+resource "github_actions_environment_secret" "toto_ml_supito_secret_gcp_service_account_key" {
+    repository = data.github_repository.toto_ml_supito_service_gh_repo.name
+    environment = var.toto_environment
+    secret_name = "GOOGLE_APPLICATION_CREDENTIALS"
+    plaintext_value = base64encode(var.gcp_service_account_key)
+}

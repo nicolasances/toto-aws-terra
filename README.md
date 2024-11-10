@@ -16,6 +16,7 @@ Toto Terraform modules need **at least** the following variables:
 * `certificate_arn`: The ARN of the Certificate that should be used for all HTTPS communications. 
 * `aws_account_id`: The AWS Account Id (can be found in the AWS Console under "Account")
 * `aws_route53_zone_id`: Id of the manually created Route53 Zone (Route 53 > Hosted Zones > "your zone name" > Hosted Zone details > Hosted zone ID)
+* `gcp_service_account_key`: This variable must contain the content of the GCP Service Account JSON Key file that will (can) be used by AWS-deployed microservices to access GCP resources (e.g. GCS). 
 
 ### 2. Create a User and User Group on AWS IAM
 Create a new User and a User Group for the Terraform User. <br>
