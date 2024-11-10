@@ -154,5 +154,5 @@ resource "github_actions_environment_secret" "toto_ml_supito_secret_gcp_service_
     repository = data.github_repository.toto_ml_supito_service_gh_repo.name
     environment = var.toto_environment
     secret_name = "GOOGLE_APPLICATION_CREDENTIALS"
-    plaintext_value = var.gcp_service_account_key
+    plaintext_value = base64encode(var.gcp_service_account_key)
 }
