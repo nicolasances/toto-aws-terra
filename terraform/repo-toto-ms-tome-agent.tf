@@ -5,7 +5,7 @@
 # 1. Github Repo creation, with secrets settings.
 ########################################################
 data "github_repository" "tome_agent_gh_repo" {
-    full_name = "nicolasances/toto-python-ms-template"
+    full_name = "nicolasances/toto-ms-tome-agent"
 }
 
 resource "github_repository_environment" "tome_agent_gh_env" {
