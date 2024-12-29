@@ -74,3 +74,16 @@ variable "mongo_host" {
     type = string
     sensitive = true
 }
+########################################################
+# 7. Microservice-specific 
+########################################################
+variable "toto_ms_tome_agent_mongo_user" {
+  description = "Mongo user for the microservice"
+  type = string
+  sensitive = true
+}
+variable "toto_ms_tome_agent_mongo_pswd" {
+  description = "Mongo pswd for the microservice"
+  type = string
+  sensitive = true
+}

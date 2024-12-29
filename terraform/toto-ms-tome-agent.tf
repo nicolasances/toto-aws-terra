@@ -156,3 +156,23 @@ resource "github_actions_environment_secret" "tome_agent_secret_gcp_service_acco
     secret_name = "GOOGLE_APPLICATION_CREDENTIALS"
     plaintext_value = base64encode(var.gcp_service_account_key)
 }
+########################################################
+# 1.11 Microservice-specific secrets
+########################################################
+resource "aws_secretsmanager_secret" "tome_agent_secret_mongo_user" {
+    name = format("toto/%s/toto-ms-tome-agent-mongo-user", var.toto_environment)
+    description = format("Mongo user for the %s environment", var.toto_environment)
+}
+resource "aws_secretsmanager_secret_version" "tome_agent_secret_mongo_user_version" {
+    secret_id = aws_secretsmanager_secret.tome_agent_secret_mongo_user.id
+    secret_string = var.toto_ms_tome_agent_mongo_user
+}
+
+resource "aws_secretsmanager_secret" "tome_agent_secret_mongo_pswd" {
+    name = format("toto/%s/toto-ms-tome-agent-mongo-pswd", var.toto_environment)
+    description = format("Mongo pswd for the %s environment", var.toto_environment)
+}
+resource "aws_secretsmanager_secret_version" "tome_agent_secret_mongo_pswd_version" {
+    secret_id = aws_secretsmanager_secret.tome_agent_secret_mongo_pswd.id
+    secret_string = var.toto_ms_tome_agent_mongo_pswd
+}
