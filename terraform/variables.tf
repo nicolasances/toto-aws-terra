@@ -66,3 +66,11 @@ variable "gcp_service_account_key" {
   type = string
   sensitive = true
 }
+########################################################
+# 6. MongoDB
+########################################################
+variable "mongo_host" {
+    description = "Host for Mongo"
+    type = string
+    sensitive = true
+}
