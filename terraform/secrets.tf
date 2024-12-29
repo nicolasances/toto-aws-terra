@@ -14,8 +14,8 @@ resource "aws_secretsmanager_secret_version" "jwt_signing_key" {
 # 2. MongoDB
 ########################################################
 resource "aws_secretsmanager_secret" "secret_mongo_host" {
-    name = "mongo-host"
-    description = "Host address of the Mongo DB"
+    name = format("toto/%s/mongo-host", var.toto_environment)
+    description = format("Mongo host for the %s environment", var.toto_environment)
 }
 resource "aws_secretsmanager_secret_version" "secret_mongo_host_version" {
     secret_id = aws_secretsmanager_secret.secret_mongo_host.id
