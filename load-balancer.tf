@@ -44,7 +44,7 @@ resource "aws_lb" "toto_alb" {
   name = format("toto-alb-%s", var.toto_environment)
   internal = false
   load_balancer_type = "application"
-  security_groups = [ aws_security_group.toto_open_service.id ]
+  security_groups = [ aws_security_group.toto_loadbalancer_sg.id ]
   subnets = [aws_subnet.toto_pub_subnet_1.id, aws_subnet.toto_pub_subnet_2.id]
 }
 
