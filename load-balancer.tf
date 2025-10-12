@@ -2,12 +2,12 @@
 # 0. Security Group for Load Balancer
 ########################################################
 resource "aws_security_group" "toto_loadbalancer_sg" {
-  name = format("toto-%s-loadbalancer_sg", var.toto_environment)
+  name = format("toto-%s-loadbalancer_sg", var.toto_env)
   description = "Allow Internet Access to the Load Balancer"
   vpc_id = aws_vpc.toto_vpc.id
 
   tags = {
-    Name = format("toto-%s-loadbalancer_sg", var.toto_environment)
+    Name = format("toto-%s-loadbalancer_sg", var.toto_env)
   }
 }
 resource "aws_vpc_security_group_ingress_rule" "toto_lb_allow_http_80" {
@@ -41,7 +41,7 @@ resource "aws_vpc_security_group_egress_rule" "toto_lb_allow_all_outgoing" {
 # 1. Load Balancer
 ########################################################
 resource "aws_lb" "toto_alb" {
-  name = format("toto-alb-%s", var.toto_environment)
+  name = format("toto-alb-%s", var.toto_env)
   internal = false
   load_balancer_type = "application"
   security_groups = [ aws_security_group.toto_loadbalancer_sg.id ]
