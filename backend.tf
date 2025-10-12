@@ -9,7 +9,7 @@ terraform {
   backend "s3" {
     bucket      = "nimat-terraform-bucket"    
     key         = "myproject/prod/terraform.tfstate"
-    region      = "eu-north-1"                    
+    region      = var.aws_region                   
     use_lockfile = true                           # S3 native locking (recommended)
     encrypt     = true
   }
@@ -17,5 +17,5 @@ terraform {
 
 # Configure the AWS Provider
 provider "aws" {
-  region = "eu-north-1"
+  region = var.aws_region
 }
