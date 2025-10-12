@@ -16,8 +16,7 @@ resource "aws_vpc" "toto_vpc" {
 resource "aws_subnet" "toto_ecs_subnet_1" {
   vpc_id = aws_vpc.toto_vpc.id
   cidr_block = "10.0.0.0/26"
-  availability_zone = "eu-west-1a"
-
+  availability_zone = format("%sa", var.aws_region)
   tags = {
     Name = format("toto-%s-ecs-subnet-1", var.toto_env)
   }
@@ -26,7 +25,7 @@ resource "aws_subnet" "toto_ecs_subnet_1" {
 resource "aws_subnet" "toto_ecs_subnet_2" {
   vpc_id = aws_vpc.toto_vpc.id
   cidr_block = "10.0.0.64/26"
-  availability_zone = "eu-west-1b"
+  availability_zone = format("%sb", var.aws_region)
 
   tags = {
     Name = format("toto-%s-ecs-subnet-2", var.toto_env)
@@ -37,7 +36,7 @@ resource "aws_subnet" "toto_ecs_subnet_2" {
 resource "aws_subnet" "toto_pub_subnet_1" {
   vpc_id = aws_vpc.toto_vpc.id
   cidr_block = "10.0.0.128/26"
-  availability_zone = "eu-west-1a"
+  availability_zone = format("%sa", var.aws_region)
 
   tags = {
     Name = format("toto-%s-pub-subnet-1", var.toto_env)
@@ -47,7 +46,7 @@ resource "aws_subnet" "toto_pub_subnet_1" {
 resource "aws_subnet" "toto_pub_subnet_2" {
   vpc_id = aws_vpc.toto_vpc.id
   cidr_block = "10.0.0.192/26"
-  availability_zone = "eu-west-1b"
+  availability_zone = format("%sb", var.aws_region)
 
   tags = {
     Name = format("toto-%s-pub-subnet-2", var.toto_env)
