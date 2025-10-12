@@ -6,16 +6,10 @@ terraform {
     }
   }
   required_version = ">= 1.3"
-  backend "s3" {
-    bucket      = "nimat-${var.toto_env}-terraform-bucket"
-    key         = "myproject/prod/terraform.tfstate"
-    region      = var.aws_region                   
-    use_lockfile = true                           # S3 native locking (recommended)
-    encrypt     = true
-  }
+  backend "s3" { } # Check backend-dev.tfbackend for details or backend-prod.tfbackend (based on environment)
 }
 
 # Configure the AWS Provider
 provider "aws" {
-  region = var.aws_region
+  region = "eu-north-1"
 }
