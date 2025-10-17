@@ -106,10 +106,11 @@ resource "aws_codebuild_project" "toto_ms_ex1_container_builder" {
 
   # --- ENVIRONMENT CONFIGURATION ---
   environment {
-    # Building containers requires LINUX_CONTAINER type
+    # Using AWS managed Amazon Linux image
     type          = "LINUX_CONTAINER"
     compute_type  = "BUILD_GENERAL1_MEDIUM"
-    image         = format("%s.dkr.ecr.%s.amazonaws.com/%s/%s:latest", data.aws_caller_identity.current.account_id, var.aws_region, var.toto_env, local.toto_microservice_name)
+    image         = "aws/codebuild/standard:7.0"
+    image_pull_credentials_type = "CODEBUILD"
     
     # CRITICAL: Enables Docker-in-Docker functionality (required for building containers)
     privileged_mode = true 
@@ -134,8 +135,7 @@ resource "aws_codebuild_project" "toto_ms_ex1_container_builder" {
   # Assuming the container is pushed to a registry (ECR), 
   # we can set the primary artifact to NO_ARTIFACTS.
   artifacts {
-    type     = "NO_ARTIFACTS"
-    # location = aws_s3_bucket.codebuild_artifacts.bucket
+    type = "NO_ARTIFACTS"
   }
 
 }
