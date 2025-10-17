@@ -50,6 +50,7 @@ data "aws_iam_policy_document" "codebuild_policy_doc" {
     effect = "Allow"
     actions = [
       "codestar-connections:UseConnection",
+      "codestar-connections:GetConnection",
     ]
     # Grant permission to use the specific connection for source checkout
     resources = [var.code_connection_arn] 
