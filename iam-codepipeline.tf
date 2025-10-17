@@ -63,7 +63,7 @@ data "aws_iam_policy_document" "codepipeline_policy_doc" {
     actions = [
         "codestar-connections:GetConnectionToken",
         "codestar-connections:GetConnection",
-        "codestar-connections:UseConnection"
+        "codestar-connections:UseConnection",
         "codeconnections:GetConnectionToken",
         "codeconnections:GetConnection",
         "codeconnections:UseConnection",
