@@ -87,3 +87,12 @@ resource "aws_route_table_association" "route_table_pub_subnet_2" {
   subnet_id = aws_subnet.toto_pub_subnet_2.id
   route_table_id = aws_route_table.route_table.id
 }
+resource "aws_route_table_association" "route_table_ecs_subnet_1" {
+  subnet_id = aws_subnet.toto_ecs_subnet_1.id
+  route_table_id = aws_route_table.route_table.id
+}
+resource "aws_route_table_association" "route_table_ecs_subnet_2" {
+  subnet_id = aws_subnet.toto_ecs_subnet_2.id
+  route_table_id = aws_route_table.route_table.id
+}
+
