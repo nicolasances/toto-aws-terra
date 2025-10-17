@@ -25,7 +25,7 @@ resource "aws_ecs_task_definition" "toto_ms_ex1_service_task_def" {
   container_definitions = jsonencode([
     {
       name      = local.toto_microservice_name
-      image     = format("%s.dkr.ecr.%s.amazonaws.com/%s/%s:latest", var.aws_account_id, var.aws_region, var.toto_env, local.toto_microservice_name)
+      image     = format("%s.dkr.ecr.%s.amazonaws.com/%s/%s:latest", data.aws_caller_identity.current.account_id, var.aws_region, var.toto_env, local.toto_microservice_name)
       environment = [
         {
             name = "HYPERSCALER", 
