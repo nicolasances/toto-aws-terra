@@ -42,6 +42,8 @@ data "aws_iam_policy_document" "codebuild_policy_doc" {
     resources = [
       aws_s3_bucket.codebuild_artifacts.arn,
       "${aws_s3_bucket.codebuild_artifacts.arn}/*",
+      aws_s3_bucket.codepipeline_artifacts.arn,
+      "${aws_s3_bucket.codepipeline_artifacts.arn}/*",
     ]
   }
 
