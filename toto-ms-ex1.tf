@@ -88,11 +88,11 @@ resource "aws_ecs_service" "toto_ms_ex1_service" {
     security_groups = [ aws_security_group.toto_loadbalancer_sg.id ]
     assign_public_ip = true
   }
-#   load_balancer {
-#     target_group_arn = aws_lb_target_group.service_tg.arn
-#     container_name = local.toto_microservice_name
-#     container_port = 8080
-#   }
+  load_balancer {
+    target_group_arn = aws_lb_target_group.toto_ms_ex1_service_tg.arn
+    container_name = local.toto_microservice_name
+    container_port = 8080
+  }
 }
 
 ########################################################
