@@ -55,7 +55,7 @@ data "aws_iam_policy_document" "codebuild_policy_doc" {
       "sts:GetServiceBearerToken", # Often needed for CodeStar Connections authentication flow
     ]
     # Grant permission to use the specific connection for source checkout
-    resources = [var.code_connection_arn] 
+    resources = ["arn:aws:codeconnections:eu-north-1:787222310702:connection/37cdb817-9ca7-40ad-a811-301226c66e09"] 
   }
 
   statement {
