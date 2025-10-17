@@ -15,7 +15,7 @@ locals {
 # 1. ECR Repository
 ########################################################
 resource "aws_ecr_repository" "toto_ms_ex1_ecr_private_repo" {
-  name = local.toto_microservice_name
+  name = format("%s/%s", var.toto_env, local.toto_microservice_name)
 }
 
 ########################################################
