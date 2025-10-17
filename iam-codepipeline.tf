@@ -24,7 +24,7 @@ data "aws_iam_policy_document" "codepipeline_policy_doc" {
         "s3:GetBucketAcl",
         "s3:GetBucketLocation"
     ]
-    resources = ["*"], # Standard logs access,
+    resources = ["*"] # Standard logs access
   }
 
   statement {
