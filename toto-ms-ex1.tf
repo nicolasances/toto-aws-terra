@@ -219,7 +219,7 @@ resource "aws_codepipeline" "toto_ms_ex1_ecs_pipeline" {
 #    This section creates the Target Group for this service.
 ########################################################
 resource "aws_lb_target_group" "toto_ms_ex1_service_tg" {
-  name = format("%s-tg-%s", local.toto_microservice_name, var.toto_environment)
+  name = format("%s-tg-%s", local.toto_microservice_name, var.toto_env)
   port = 8080
   protocol = "HTTP"
   vpc_id = aws_vpc.toto_vpc.id
@@ -229,8 +229,8 @@ resource "aws_lb_target_group" "toto_ms_ex1_service_tg" {
 ##############################################################
 # 2. ALB Listener Rules
 ##############################################################
-resource "aws_lb_listener_rule" "alb_listener_rule" {
-  listener_arn = var.alb_listener_arn
+resource "aws_lb_listener_rule" "toto_ms_ex1_alb_listener_rule" {
+  listener_arn = aws_lb_listener.toto_alb_listener_http_8080.arn
   condition {
     path_pattern {
       values = ["/ex1/*"]
