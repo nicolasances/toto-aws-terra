@@ -12,7 +12,14 @@ locals {
 }
 
 ########################################################
-# 1. Task Definition
+# 1. ECR Repository
+########################################################
+resource "aws_ecr_repository" "toto_ms_ex1_ecr_private_repo" {
+  name = local.toto_microservice_name
+}
+
+########################################################
+# 2. Task Definition
 ########################################################
 resource "aws_ecs_task_definition" "toto_ms_ex1_service_task_def" {
   family = format("%s-%s", local.toto_microservice_name, var.toto_env)
@@ -64,7 +71,7 @@ resource "aws_ecs_task_definition" "toto_ms_ex1_service_task_def" {
 }
 
 ########################################################
-# 2. Service
+# 3. Service
 ########################################################
 resource "aws_ecs_service" "toto_ms_ex1_service" {
   name = local.toto_microservice_name
@@ -89,5 +96,5 @@ resource "aws_ecs_service" "toto_ms_ex1_service" {
 }
 
 ########################################################
-# 3. CI/CD Pipeline
+# 4. CI/CD Pipeline
 ########################################################
