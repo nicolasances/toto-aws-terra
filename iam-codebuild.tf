@@ -51,9 +51,19 @@ data "aws_iam_policy_document" "codebuild_policy_doc" {
     actions = [
       "codestar-connections:UseConnection",
       "codestar-connections:GetConnection",
+      "codestar-connections:CreateConnection",
     ]
     # Grant permission to use the specific connection for source checkout
     resources = [var.code_connection_arn] 
+  }
+
+  statement {
+    sid    = "CodeStarConnectionAccessAll"
+    effect = "Allow"
+    actions = [
+      "codestar-connections:CreateConnection",
+    ]
+    resources = ["*"]
   }
 
   # ECR Permissions (for both pulling base images and pushing results)
