@@ -54,7 +54,7 @@ data "aws_iam_policy_document" "codepipeline_policy_doc" {
         "codebuild:BatchGetBuildBatches",
         "codebuild:StartBuildBatch"
     ]
-    resources = ["*"], 
+    resources = ["*"]
   }
 
   statement {
