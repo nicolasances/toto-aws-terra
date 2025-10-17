@@ -109,7 +109,7 @@ resource "aws_codebuild_project" "toto_ms_ex1_container_builder" {
     # Using AWS managed Amazon Linux image
     type          = "LINUX_CONTAINER"
     compute_type  = "BUILD_GENERAL1_MEDIUM"
-    image         = "aws/codebuild/standard:7.0"
+    image         = "aws/codebuild/amazonlinux-x86_64-standard:5.0"
     image_pull_credentials_type = "CODEBUILD"
     
     # CRITICAL: Enables Docker-in-Docker functionality (required for building containers)
