@@ -153,21 +153,6 @@ resource "aws_codepipeline" "toto_ms_ex1_ecs_pipeline" {
     type     = "S3"
   }
 
-  # --- Trigger Configuration: start the pipeline on push and pull request events ---
-  trigger {
-    provider_type = "CodeStarSourceConnection"
-    git_configuration {
-      source_action_name = "Source"
-      
-      # Push Trigger
-      push {
-        branches {
-          includes = ["main"]
-        }
-      }
-    }
-  }
-
   # --- Stage 1: Source (GitHub via CodeConnections) ---
   stage {
     name = "Source"
