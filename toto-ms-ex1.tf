@@ -135,7 +135,7 @@ resource "aws_codebuild_project" "toto_ms_ex1_container_builder" {
   # we can set the primary artifact to NO_ARTIFACTS.
   artifacts {
     type     = "NO_ARTIFACTS"
-    location = aws_s3_bucket.codebuild_artifacts.bucket
+    # location = aws_s3_bucket.codebuild_artifacts.bucket
   }
 
 }
