@@ -166,7 +166,7 @@ resource "aws_codepipeline" "toto_ms_ex1_ecs_pipeline" {
 
       configuration = {
         ConnectionArn    = var.code_connection_arn
-        FullRepositoryId = "https://github.com/nicolasances/${local.toto_microservice_name}.git"
+        FullRepositoryId = "nicolasances/${local.toto_microservice_name}"
         BranchName       = "main"
       }
     }
