@@ -49,22 +49,18 @@ data "aws_iam_policy_document" "codebuild_policy_doc" {
     sid    = "CodeStarConnectionAccess"
     effect = "Allow"
     actions = [
-      "codestar-connections:UseConnection",
-      "codestar-connections:GetConnection",
-      "codestar-connections:CreateConnection",
-      "sts:GetServiceBearerToken", # Often needed for CodeStar Connections authentication flow
+        "codestar-connections:GetConnectionToken",
+        "codestar-connections:GetConnection",
+        "codeconnections:GetConnectionToken",
+        "codeconnections:GetConnection",
+        "codeconnections:UseConnection",
     ]
     # Grant permission to use the specific connection for source checkout
-    resources = [var.code_connection_arn] 
-  }
-
-  statement {
-    sid    = "CodeStarConnectionAccessAll"
-    effect = "Allow"
-    actions = [
-      "codestar-connections:CreateConnection",
-    ]
-    resources = ["*"]
+    # IMPORTANT: it seems like it was important to have both the versions of the code connection ARN below. Won't work with only codeconnections
+    resources = [
+        "arn:aws:codestar-connections:${var.aws_region}:${data.aws_caller_identity.current.account_id}:connection/${var.code_connection_hash}",
+        "arn:aws:codeconnections:${var.aws_region}:${data.aws_caller_identity.current.account_id}:connection/${var.code_connection_hash}",
+    ] 
   }
 
   # ECR Permissions (for both pulling base images and pushing results)

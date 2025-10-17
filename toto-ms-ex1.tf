@@ -101,7 +101,7 @@ resource "aws_ecs_service" "toto_ms_ex1_service" {
 # 4.1. Cloud Build
 resource "aws_codebuild_project" "toto_ms_ex1_container_builder" {
   name          = format("%s-%s", local.toto_microservice_name, var.toto_env)
-  service_role  = var.codebuild_role_arn
+  service_role  = aws_iam_role.codebuild_role.arn
   build_timeout = "120"
 
   # --- ENVIRONMENT CONFIGURATION ---

@@ -31,3 +31,7 @@ variable "code_connection_arn" {
   description = "ARN of the CodeStar Connection for GitHub"
   type        = string
 }
+variable "code_connection_hash" {
+  description = "Hash of the CodeStar Connection for GitHub (it's the last part of the ARN, after the last /)"
+  type        = string
+}
