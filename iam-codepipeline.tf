@@ -39,8 +39,8 @@ data "aws_iam_policy_document" "codepipeline_policy_doc" {
         "s3:GetObjectVersion"
     ]
     resources = [
-      aws_s3_bucket.aws_s3_bucket.arn,
-      "${aws_s3_bucket.aws_s3_bucket.arn}/*",
+      aws_s3_bucket.codepipeline_artifacts.arn,
+      "${aws_s3_bucket.codepipeline_artifacts.arn}/*",
     ]
   }
 
