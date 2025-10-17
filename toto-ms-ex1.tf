@@ -98,3 +98,44 @@ resource "aws_ecs_service" "toto_ms_ex1_service" {
 ########################################################
 # 4. CI/CD Pipeline
 ########################################################
+# 4.1. Cloud Build
+resource "aws_codebuild_project" "toto_ms_ex1_container_builder" {
+  name          = format("%s-%s", local.toto_microservice_name, var.toto_env)
+  service_role  = var.codebuild_role_arn
+  build_timeout = "120"
+
+  # --- ENVIRONMENT CONFIGURATION ---
+  environment {
+    # Building containers requires LINUX_CONTAINER type
+    type          = "LINUX_CONTAINER"
+    compute_type  = "BUILD_GENERAL1_MEDIUM"
+    image         = format("%s.dkr.ecr.%s.amazonaws.com/%s/%s:latest", data.aws_caller_identity.current.account_id, var.aws_region, var.toto_env, local.toto_microservice_name)
+    
+    # CRITICAL: Enables Docker-in-Docker functionality (required for building containers)
+    privileged_mode = true 
+  }
+
+  # --- SOURCE CONFIGURATION (GitHub via CodeStar Connection) ---
+  source {
+    type     = "GITHUB"
+    location = "https://github.com/nicolasances/${local.toto_microservice_name}.git"
+    
+    # CRITICAL: Path to the buildspec file in the repository
+    buildspec = "aws/codebuild/buildspec.yml" 
+
+    # Authentication using the CodeStar Connection ARN
+    auth {
+      type     = "CODECONNECTIONS"
+      resource = var.code_connection_arn
+    }
+  }
+
+  # --- ARTIFACTS CONFIGURATION ---
+  # Assuming the container is pushed to a registry (ECR), 
+  # we can set the primary artifact to NO_ARTIFACTS.
+  artifacts {
+    type     = "NO_ARTIFACTS"
+    location = aws_s3_bucket.codebuild_artifacts.bucket
+  }
+
+}
