@@ -224,6 +224,17 @@ resource "aws_lb_target_group" "toto_ms_ex1_service_tg" {
   protocol = "HTTP"
   vpc_id = aws_vpc.toto_vpc.id
   target_type = "ip"
+
+  health_check {
+    path                = "/health"
+    protocol            = "HTTP"
+    port                = "traffic-port"
+    interval            = 30
+    timeout             = 15
+    healthy_threshold   = 2
+    unhealthy_threshold = 5
+    matcher             = "200"
+  }
 }
 
 ##############################################################
