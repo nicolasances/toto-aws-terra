@@ -68,7 +68,7 @@ resource "aws_ecs_task_definition" "toto_ms_ex1_service_task_def" {
 ########################################################
 resource "aws_ecs_service" "toto_ms_ex1_service" {
   name = local.toto_microservice_name
-  cluster = var.ecs_cluster_arn
+  cluster = aws_ecs_cluster.ecs_cluster.arn
   task_definition = aws_ecs_task_definition.toto_ms_ex1_service_task_def.arn
   desired_count = 1
   capacity_provider_strategy {
