@@ -35,6 +35,12 @@ Terraform for Toto on an AWS Sandbox will create the following resources:
     * ECR Repo
     * CI/CD pipeline with CodeBuild and CodePipeline
 
+The first two (Base and ECS-specific) are taken care by the generic terraform files in the root of this project (ecs.tf, load-balancer.tf, networking.tf, etc...). 
+
+The **Microservice-specific resources** instead must be created by a service-specific Terraform file, that will be named after the Microservice. <br>
+E.g. a microservice called `toto-ms-pippo` will have a file called `toto-ms-pippo.tf` in this project, that takes care of creating task definition, service, ECR repo, etc... 
+
+
 ### Backend Configuration
 Notes: 
 * Terraform State will be saved in S3
@@ -44,11 +50,7 @@ This is why the `backend.tf` file **does not contain any AWS Keys**.
 
 
 
-## Terraform Apply
+### Terraform Apply
 When running `terraform apply`, you need to pass the following variables: 
 * `toto_env` - can be only 'dev' or 'prod'
 
-You can pass vars like this: 
-```
-terraform apply -var="toto_env=prod"
-```
