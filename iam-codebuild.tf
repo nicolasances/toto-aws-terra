@@ -66,6 +66,18 @@ data "aws_iam_policy_document" "codebuild_policy_doc" {
     resources = ["*"]
   }
 
+    # --- CRITICAL: CODESTAR CONNECTION ACCESS ---
+  statement {
+    sid    = "CodeStarConnectionAccess"
+    effect = "Allow"
+    actions = [
+      "codestar-connections:UseConnection",
+      "sts:GetServiceBearerToken", # Often needed for CodeStar Connections authentication flow
+    ]
+    # Grant permission to use the specific connection for source checkout
+    resources = [var.code_connection_arn] 
+  }
+
   # ECR Permissions (for both pulling base images and pushing results)
   statement {
     sid    = "ECRContainerRegistryAccess"
