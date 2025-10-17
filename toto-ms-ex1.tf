@@ -211,3 +211,33 @@ resource "aws_codepipeline" "toto_ms_ex1_ecs_pipeline" {
     }
   }
 }
+
+########################################################
+# 5. Load Balancer
+########################################################
+# 5.1. Target Groups
+#    This section creates the Target Group for this service.
+########################################################
+resource "aws_lb_target_group" "toto_ms_ex1_service_tg" {
+  name = format("%s-tg-%s", local.toto_microservice_name, var.toto_environment)
+  port = 8080
+  protocol = "HTTP"
+  vpc_id = aws_vpc.toto_vpc.id
+  target_type = "ip"
+}
+
+##############################################################
+# 2. ALB Listener Rules
+##############################################################
+resource "aws_lb_listener_rule" "alb_listener_rule" {
+  listener_arn = var.alb_listener_arn
+  condition {
+    path_pattern {
+      values = ["/ex1/*"]
+    }
+  }
+  action {
+    type = "forward"
+    target_group_arn = aws_lb_target_group.toto_ms_ex1_service_tg.arn
+  }
+}
