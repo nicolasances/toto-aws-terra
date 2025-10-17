@@ -139,3 +139,90 @@ resource "aws_codebuild_project" "toto_ms_ex1_container_builder" {
   }
 
 }
+
+############################################################################################
+# 4.2. CodePipeline
+# AWS CodePipeline Resource
+resource "aws_codepipeline" "toto_ms_ex1_ecs_pipeline" {
+  name     = "${local.toto_microservice_name}-ecs-pipeline"
+  role_arn = aws_iam_role.codepipeline_role.arn
+
+  # Artifact store definition
+  artifact_store {
+    location = aws_s3_bucket.codepipeline_artifacts.bucket
+    type     = "S3"
+  }
+
+  # --- Trigger Configuration: start the pipeline on push and pull request events ---
+  trigger {
+    provider_type = "CodeStarSourceConnection"
+    git_configuration {
+      source_action_name = "Source"
+      
+      # Push Trigger
+      push {
+        branches {
+          includes = ["main"]
+        }
+      }
+    }
+  }
+
+  # --- Stage 1: Source (GitHub via CodeConnections) ---
+  stage {
+    name = "Source"
+    action {
+      name             = "Source"
+      category         = "Source"
+      owner            = "AWS"
+      provider         = "CodeStarSourceConnection"
+      version          = "1"
+      output_artifacts = ["SourceArtifact"]
+
+      configuration = {
+        ConnectionArn    = var.code_connection_arn
+        FullRepositoryId = "https://github.com/nicolasances/${local.toto_microservice_name}.git"
+        BranchName       = "main"
+      }
+    }
+  }
+
+  # --- Stage 2: Build (Reuse existing CodeBuild Project) ---
+  stage {
+    name = "Build"
+    action {
+      name            = "Build"
+      category        = "Build"
+      owner           = "AWS"
+      provider        = "CodeBuild"
+      input_artifacts = ["SourceArtifact"]
+      output_artifacts = ["BuildArtifact"]
+      version         = "1"
+
+      configuration = {
+        ProjectName = aws_codebuild_project.toto_ms_ex1_container_builder.name
+      }
+    }
+  }
+
+  # --- Stage 3: Deploy (Amazon ECS) ---
+  stage {
+    name = "Deploy"
+    action {
+      name            = "Deploy"
+      category        = "Deploy"
+      owner           = "AWS"
+      provider        = "ECS"
+      input_artifacts = ["BuildArtifact"]
+      version         = "1"
+
+      configuration = {
+        ClusterName = aws_ecs_cluster.ecs_cluster.name
+        ServiceName = aws_ecs_service.toto_ms_ex1_service.name
+        # The imagedefinitions.json file must be created by the CodeBuild step
+        # and included in the BuildArtifact output.
+        FileName    = "imagedefinitions.json" 
+      }
+    }
+  }
+}
