@@ -252,3 +252,15 @@ resource "aws_lb_listener_rule" "toto_ms_ex1_alb_listener_rule" {
     target_group_arn = aws_lb_target_group.toto_ms_ex1_service_tg.arn
   }
 }
+resource "aws_lb_listener_rule" "toto_ms_ex1_alb_listener_rule_https" {
+  listener_arn = aws_lb_listener.toto_alb_listener_https.arn
+  condition {
+    path_pattern {
+      values = ["/ex1/*"]
+    }
+  }
+  action {
+    type = "forward"
+    target_group_arn = aws_lb_target_group.toto_ms_ex1_service_tg.arn
+  }
+}

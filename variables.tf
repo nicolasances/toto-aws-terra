@@ -35,3 +35,11 @@ variable "code_connection_hash" {
   description = "Hash of the CodeStar Connection for GitHub (it's the last part of the ARN, after the last /)"
   type        = string
 }
+
+#########################################################
+# 3. Certificates
+#########################################################
+variable "alb_certificate_arn" {
+  description = "ARN of the ACM Certificate for the Application Load Balancer"
+  type        = string
+}
