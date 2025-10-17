@@ -19,3 +19,15 @@ variable "aws_region" {
   type        = string
   default     = "eu-north-1"
 }
+
+#########################################################
+# 2. Code Build
+#########################################################
+variable "codebuild_role_arn" {
+  description = "ARN of the IAM Role for CodeBuild"
+  type        = string
+}
+variable "code_connection_arn" {
+  description = "ARN of the CodeStar Connection for GitHub"
+  type        = string
+}
