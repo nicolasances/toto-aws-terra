@@ -14,9 +14,15 @@ The Configuration of a Toto environment is **not all done in Terraform**. Some t
 * **Creating a Github Connection** to be used for the CI/CD CodePipeline and CodeBuild.
 * **Creation of an S3 Bucket for Terraform**. 
 
+**MAKE SURE YOU PERFORM THE BELOW PRELIMINARY WORK**. 
+
 ## Preliminary work: 
 
 Follow the [Preliminary Work Instructions to prepare Terraform on an AWS Sandbox](preliminary.md) before anything else.
+
+**IMPORTANT**: 
+* Terraform runs from an EC2 instance. **YOU WILL NEED 2 INSTANCES**: one for dev and one for prod. <br>
+That is made to avoid having to rerun `terraform init` everytime and risk messing up with ENV vars.
 
 ## Terraform
 Terraform for Toto on an AWS Sandbox will create the following resources: 
@@ -49,8 +55,14 @@ The EC2 Instance **must have an IAM Role** attached that allows it to do what's 
 This is why the `backend.tf` file **does not contain any AWS Keys**.
 
 
+### Running Terraform
+Make sure that you have 
+* **Cloned this repo**
+* Run the `scripts/<env>.sh` script that sets the TF_VARS
+* Run `terraform init` on this VM (should only be done once in the lifetime of the VM - but not sure what happens if you need to use another VM at some point)
 
-### Terraform Apply
-When running `terraform apply`, you need to pass the following variables: 
-* `toto_env` - can be only 'dev' or 'prod'
+## Post Run
+**IMPORTANT**!!
 
+After Terraform has run, you'll have a **Load Balancer** and can now go to *Route 53* and **create a record that link to the ALB**. To do that, [follow this tutorial](https://github.com/nicolasances/aws-notes/blob/main/docs/own-domain-name-alb.md). <br>
+This obviously has only to be done once.
