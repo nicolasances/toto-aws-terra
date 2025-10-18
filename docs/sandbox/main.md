@@ -8,7 +8,7 @@ Other than that, the admin user should be able to do everything an account owner
 ## What's not in Terraform
 
 The Configuration of a Toto environment is **not all done in Terraform**. Some things are still done **manually**. Those things are: 
-* **Buying a domain** on Route53. 
+* **Buying a domain** on Route53. *Do that yourself, manually*. 
 * **Requesting a public certificate** to be issued for domains on AWS. 
 * **Creation of subdomains and attachment to ALB**. 
 * **Creating a Github Connection** to be used for the CI/CD CodePipeline and CodeBuild.

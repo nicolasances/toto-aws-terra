@@ -161,7 +161,7 @@ resource "aws_codepipeline" "toto_ms_ex1_ecs_pipeline" {
       configuration = {
         ConnectionArn    = var.code_connection_arn
         FullRepositoryId = "nicolasances/toto-ms-ex1"
-        BranchName       = var.toto_env == "prod" ? "release/*" : "feature/*"
+        BranchName       = var.toto_env == "prod" ? "prod" : "dev"
       }
     }
   }
