@@ -59,7 +59,11 @@ This is why the `backend.tf` file **does not contain any AWS Keys**.
 Make sure that you have 
 * **Cloned this repo**
 * Run the `scripts/<env>.sh` script that sets the TF_VARS
-* Run `terraform init` on this VM (should only be done once in the lifetime of the VM - but not sure what happens if you need to use another VM at some point)
+* Run `terraform init` on this VM (should only be done once in the lifetime of the VM - but not sure what happens if you need to use another VM at some point). <br>
+To run the init, you need to specify the right terraform file: 
+```
+terraform init -backend-config=backend-dev.hcl
+```
 
 ## Post Run
 **IMPORTANT**!!
