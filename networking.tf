@@ -75,7 +75,7 @@ resource "aws_route_table" "route_table" {
     gateway_id = aws_internet_gateway.igw.id
   }
   tags = {
-    Name = "Toto public Routing Table"
+    Name = "Toto public Routing Table - ${var.toto_env}"
   }
 }
 

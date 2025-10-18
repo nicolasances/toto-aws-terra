@@ -1,6 +1,6 @@
 # 1. IAM Role that CodeBuild service can assume
 resource "aws_iam_role" "codebuild_role" {
-  name = "TotoTFCodeBuildRole"
+  name = "TotoTFCodeBuildRole${var.toto_env}"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -89,7 +89,7 @@ data "aws_iam_policy_document" "codebuild_policy_doc" {
 
 # 3. Attach the policy to the role
 resource "aws_iam_role_policy" "codebuild_policy" {
-  name   = "TotoTFCodeBuildPolicy"
+  name   = "TotoTFCodeBuildPolicy${var.toto_env}"
   role   = aws_iam_role.codebuild_role.id
   policy = data.aws_iam_policy_document.codebuild_policy_doc.json
 }

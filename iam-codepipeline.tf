@@ -1,5 +1,5 @@
 resource "aws_iam_role" "codepipeline_role" {
-  name = "TotoPipelineRole"
+  name = "TotoPipelineRole${var.toto_env}"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -120,7 +120,7 @@ data "aws_iam_policy_document" "codepipeline_policy_doc" {
 
 # 3. Attach the policy to the CodePipeline role
 resource "aws_iam_role_policy" "codepipeline_policy" {
-  name   = "TotoCodePipelinePolicy"
+  name   = "TotoCodePipelinePolicy${var.toto_env}"
   role   = aws_iam_role.codepipeline_role.id
   policy = data.aws_iam_policy_document.codepipeline_policy_doc.json
 }

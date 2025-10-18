@@ -4,25 +4,19 @@
 # After that you can delete it
 # ###############################################################
 # ###############################################################
-########################################################
-# 0. Constants to reuse across
-########################################################
-locals {
-  toto_microservice_name = "toto-ms-ex1"
-}
 
 ########################################################
 # 1. ECR Repository
 ########################################################
 resource "aws_ecr_repository" "toto_ms_ex1_ecr_private_repo" {
-  name = format("%s/%s", var.toto_env, local.toto_microservice_name)
+  name = format("%s/%s", var.toto_env, "toto-ms-ex1")
 }
 
 ########################################################
 # 2. Task Definition
 ########################################################
 resource "aws_ecs_task_definition" "toto_ms_ex1_service_task_def" {
-  family = format("%s-%s", local.toto_microservice_name, var.toto_env)
+  family = format("%s-%s", "toto-ms-ex1", var.toto_env)
   requires_compatibilities = ["FARGATE"]
   execution_role_arn = aws_iam_role.toto_ecs_task_execution_role.arn
   task_role_arn = aws_iam_role.toto_ecs_task_role.arn
@@ -31,8 +25,8 @@ resource "aws_ecs_task_definition" "toto_ms_ex1_service_task_def" {
   network_mode = "awsvpc"
   container_definitions = jsonencode([
     {
-      name      = local.toto_microservice_name
-      image     = format("%s.dkr.ecr.%s.amazonaws.com/%s/%s:latest", data.aws_caller_identity.current.account_id, var.aws_region, var.toto_env, local.toto_microservice_name)
+      name      = "toto-ms-ex1"
+      image     = format("%s.dkr.ecr.%s.amazonaws.com/%s/%s:latest", data.aws_caller_identity.current.account_id, var.aws_region, var.toto_env, "toto-ms-ex1")
       environment = [
         {
             name = "HYPERSCALER", 
@@ -61,7 +55,7 @@ resource "aws_ecs_task_definition" "toto_ms_ex1_service_task_def" {
         logDriver = "awslogs", 
         options = {
           awslogs-create-group = "true"
-          awslogs-group = format("/ecs/%s", local.toto_microservice_name)
+          awslogs-group = format("/ecs/%s/%s", var.toto_env, "toto-ms-ex1")
           awslogs-region = var.aws_region
           awslogs-stream-prefix = "ecs"
         }
@@ -74,7 +68,7 @@ resource "aws_ecs_task_definition" "toto_ms_ex1_service_task_def" {
 # 3. Service
 ########################################################
 resource "aws_ecs_service" "toto_ms_ex1_service" {
-  name = local.toto_microservice_name
+  name = "toto-ms-ex1"
   cluster = aws_ecs_cluster.ecs_cluster.arn
   task_definition = aws_ecs_task_definition.toto_ms_ex1_service_task_def.arn
   desired_count = 1
@@ -90,7 +84,7 @@ resource "aws_ecs_service" "toto_ms_ex1_service" {
   }
   load_balancer {
     target_group_arn = aws_lb_target_group.toto_ms_ex1_service_tg.arn
-    container_name = local.toto_microservice_name
+    container_name = "toto-ms-ex1"
     container_port = 8080
   }
 }
@@ -100,7 +94,7 @@ resource "aws_ecs_service" "toto_ms_ex1_service" {
 ########################################################
 # 4.1. Cloud Build
 resource "aws_codebuild_project" "toto_ms_ex1_container_builder" {
-  name          = format("%s-%s", local.toto_microservice_name, var.toto_env)
+  name          = format("%s-%s", "toto-ms-ex1", var.toto_env)
   service_role  = aws_iam_role.codebuild_role.arn
   build_timeout = "120"
 
@@ -119,10 +113,10 @@ resource "aws_codebuild_project" "toto_ms_ex1_container_builder" {
   # --- SOURCE CONFIGURATION (GitHub via CodeStar Connection) ---
   source {
     type     = "GITHUB"
-    location = "https://github.com/nicolasances/${local.toto_microservice_name}.git"
+    location = "https://github.com/nicolasances/toto-ms-ex1.git"
     
     # CRITICAL: Path to the buildspec file in the repository
-    buildspec = "aws/codebuild/buildspec.yml" 
+    buildspec = "aws/codebuild/buildspec-${var.toto_env}.yml"
 
     # Authentication using the CodeStar Connection ARN
     auth {
@@ -144,7 +138,7 @@ resource "aws_codebuild_project" "toto_ms_ex1_container_builder" {
 # 4.2. CodePipeline
 # AWS CodePipeline Resource
 resource "aws_codepipeline" "toto_ms_ex1_ecs_pipeline" {
-  name     = "${local.toto_microservice_name}-ecs-pipeline"
+  name     = "toto-ms-ex1-ecs-pipeline-${var.toto_env}"
   role_arn = aws_iam_role.codepipeline_role.arn
 
   # Artifact store definition
@@ -166,8 +160,8 @@ resource "aws_codepipeline" "toto_ms_ex1_ecs_pipeline" {
 
       configuration = {
         ConnectionArn    = var.code_connection_arn
-        FullRepositoryId = "nicolasances/${local.toto_microservice_name}"
-        BranchName       = "main"
+        FullRepositoryId = "nicolasances/toto-ms-ex1"
+        BranchName       = var.toto_env == "prod" ? "release/*" : "feature/*"
       }
     }
   }
@@ -219,7 +213,7 @@ resource "aws_codepipeline" "toto_ms_ex1_ecs_pipeline" {
 #    This section creates the Target Group for this service.
 ########################################################
 resource "aws_lb_target_group" "toto_ms_ex1_service_tg" {
-  name = format("%s-tg-%s", local.toto_microservice_name, var.toto_env)
+  name = format("%s-tg-%s", "toto-ms-ex1", var.toto_env)
   port = 8080
   protocol = "HTTP"
   vpc_id = aws_vpc.toto_vpc.id

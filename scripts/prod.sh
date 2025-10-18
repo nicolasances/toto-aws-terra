@@ -1,7 +1,7 @@
-export TOTO_ENV=dev
+export TOTO_ENV=prod
 export AWS_REGION=eu-north-1
-export TF_VAR_toto_env=dev
+export TF_VAR_toto_env=prod
 export TF_VAR_aws_region=eu-north-1
 export TF_VAR_code_connection_arn=arn:aws:codeconnections:eu-north-1:787222310702:connection/37cdb817-9ca7-40ad-a811-301226c66e09
 export TF_VAR_code_connection_hash=37cdb817-9ca7-40ad-a811-301226c66e09
-export TF_VAR_alb_certificate_arn=arn:aws:acm:eu-north-1:787222310702:certificate/1157164c-4b81-497a-bb24-6f11cf59e830
+export TF_VAR_alb_certificate_arn=
