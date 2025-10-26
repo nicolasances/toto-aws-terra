@@ -33,6 +33,10 @@ resource "aws_ecs_task_definition" "tome_ms_agents_service_task_def" {
           name = "SERVICE_BASE_URL",
           value = "https://${var.domain_name}"
         },
+        {
+          name = "GALE_BROKER_URL",
+          value = var.gale_broker_url
+        },
       ]
       entryPoint = [
         "sh", "-c", "npm run start"

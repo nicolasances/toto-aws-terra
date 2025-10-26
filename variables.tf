@@ -47,3 +47,10 @@ variable "domain_name" {
   description = "Domain name for the service (e.g., example.com)"
   type        = string
 }
+#########################################################
+# 5. GALE 
+#########################################################
+variable "gale_broker_url" {
+  description = "URL of the Gale Broker"
+  type        = string
+}
