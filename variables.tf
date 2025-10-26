@@ -39,3 +39,11 @@ variable "alb_certificate_arn" {
   description = "ARN of the ACM Certificate for the Application Load Balancer"
   type        = string
 }
+
+#########################################################
+# 4. DNS
+#########################################################
+variable "domain_name" {
+  description = "Domain name for the service (e.g., example.com)"
+  type        = string
+}

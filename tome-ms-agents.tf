@@ -29,6 +29,10 @@ resource "aws_ecs_task_definition" "tome_ms_agents_service_task_def" {
           name = "ENVIRONMENT", 
           value = var.toto_env
         },
+        {
+          name = "SERVICE_BASE_URL",
+          value = "https://${var.domain_name}"
+        },
       ]
       entryPoint = [
         "sh", "-c", "npm run start"
