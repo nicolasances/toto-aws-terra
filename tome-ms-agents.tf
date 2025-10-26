@@ -231,7 +231,7 @@ resource "aws_lb_listener_rule" "tome_ms_agents_alb_listener_rule" {
   listener_arn = aws_lb_listener.toto_alb_listener_http_8080.arn
   condition {
     path_pattern {
-      values = ["/ex1/*"]
+      values = ["/tomeagents/*"]
     }
   }
   action {
@@ -243,7 +243,7 @@ resource "aws_lb_listener_rule" "tome_ms_agents_alb_listener_rule_https" {
   listener_arn = aws_lb_listener.toto_alb_listener_https.arn
   condition {
     path_pattern {
-      values = ["/ex1/*"]
+      values = ["/tomeagents/*"]
     }
   }
   action {
@@ -251,3 +251,8 @@ resource "aws_lb_listener_rule" "tome_ms_agents_alb_listener_rule_https" {
     target_group_arn = aws_lb_target_group.tome_ms_agents_service_tg.arn
   }
 }
+
+########################################################
+# 6. Secrets
+########################################################
+# 6.1. Secrets Manager
