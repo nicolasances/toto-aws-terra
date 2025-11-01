@@ -299,3 +299,36 @@ resource "aws_iam_role_policy_attachment" "gale_broker_sqs_policy_attachment" {
   role       = aws_iam_role.toto_ecs_task_role.name
   policy_arn = aws_iam_policy.gale_broker_sqs_policy.arn
 }
+
+########################################################
+# 7. Secrets on AWS Secrets Manager
+########################################################
+variable "gale_broker_mongo_user" {
+  description = "MongoDB user for Gale Broker"
+  type        = string
+  sensitive   = true
+}
+variable "gale_broker_mongo_pswd" {
+  description = "MongoDB pswd for Gale Broker"
+  type        = string
+  sensitive   = true
+}
+
+resource "aws_secretsmanager_secret" "gale_broker_mongo_user_secret" {
+  name = format("%s/%s", var.toto_env, "gale-broker-mongo-user")
+  description = "MongoDB user for Gale Broker"
+}
+resource "aws_secretsmanager_secret_version" "gale_broker_mongo_user_secret_version" {
+  secret_id     = aws_secretsmanager_secret.gale_broker_mongo_user_secret.id
+  secret_string = var.gale_broker_mongo_user
+}
+
+resource "aws_secretsmanager_secret" "gale_broker_mongo_pswd_secret" {
+  name = format("%s/%s", var.toto_env, "gale-broker-mongo-pswd")
+  description = "MongoDB pswd for Gale Broker"
+}
+resource "aws_secretsmanager_secret_version" "gale_broker_mongo_pswd_secret_version" {
+  secret_id     = aws_secretsmanager_secret.gale_broker_mongo_pswd_secret.id
+  secret_string = var.gale_broker_mongo_pswd
+}
+
