@@ -38,7 +38,7 @@ resource "aws_ecs_task_definition" "gale_broker_service_task_def" {
         },
         {
           name = "SQS_QUEUE_URL",
-          value = aws_sqs_queue.gale_broker_queue.url
+          value = aws_sqs_queue.gale_broker_queue.name
         }
       ]
       entryPoint = [
