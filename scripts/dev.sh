@@ -9,3 +9,4 @@ export TF_VAR_domain_name=api.dev.toto.nimoto.eu
 export TF_VAR_gale_broker_url=https://api.dev.toto.nimoto.eu/galebroker
 export TF_VAR_gale_broker_mongo_user=
 export TF_VAR_gale_broker_mongo_pswd=
+export TF_VAR_mongo_host=16.16.185.109
