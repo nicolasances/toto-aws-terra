@@ -6,4 +6,4 @@ export TF_VAR_code_connection_arn=arn:aws:codeconnections:eu-north-1:78722231070
 export TF_VAR_code_connection_hash=37cdb817-9ca7-40ad-a811-301226c66e09
 export TF_VAR_alb_certificate_arn=arn:aws:acm:eu-north-1:787222310702:certificate/1157164c-4b81-497a-bb24-6f11cf59e830
 export TF_VAR_domain_name=api.dev.toto.nimoto.eu
-export TF_VAR_gale_broker_url=https://gale-broker-6lv62poq7a-ew.a.run.app
+export TF_VAR_gale_broker_url=https://api.dev.toto.nimoto.eu/galebroker
