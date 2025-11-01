@@ -9,14 +9,14 @@
 # 1. ECR Repository
 ########################################################
 resource "aws_ecr_repository" "gale_broker_ecr_private_repo" {
-  name = format("%s/%s", var.toto_env, "gake-broker")
+  name = format("%s/%s", var.toto_env, "gale-broker")
 }
 
 ########################################################
 # 2. Task Definition
 ########################################################
 resource "aws_ecs_task_definition" "gale_broker_service_task_def" {
-  family = format("%s-%s", "gake-broker", var.toto_env)
+  family = format("%s-%s", "gale-broker", var.toto_env)
   requires_compatibilities = ["FARGATE"]
   execution_role_arn = aws_iam_role.toto_ecs_task_execution_role.arn
   task_role_arn = aws_iam_role.toto_ecs_task_role.arn
@@ -25,8 +25,8 @@ resource "aws_ecs_task_definition" "gale_broker_service_task_def" {
   network_mode = "awsvpc"
   container_definitions = jsonencode([
     {
-      name      = "gake-broker"
-      image     = format("%s.dkr.ecr.%s.amazonaws.com/%s/%s:latest", data.aws_caller_identity.current.account_id, var.aws_region, var.toto_env, "gake-broker")
+      name      = "gale-broker"
+      image     = format("%s.dkr.ecr.%s.amazonaws.com/%s/%s:latest", data.aws_caller_identity.current.account_id, var.aws_region, var.toto_env, "gale-broker")
       environment = [
         {
             name = "HYPERSCALER", 
@@ -59,7 +59,7 @@ resource "aws_ecs_task_definition" "gale_broker_service_task_def" {
         logDriver = "awslogs", 
         options = {
           awslogs-create-group = "true"
-          awslogs-group = format("/ecs/%s/%s", var.toto_env, "gake-broker")
+          awslogs-group = format("/ecs/%s/%s", var.toto_env, "gale-broker")
           awslogs-region = var.aws_region
           awslogs-stream-prefix = "ecs"
         }
@@ -72,7 +72,7 @@ resource "aws_ecs_task_definition" "gale_broker_service_task_def" {
 # 3. Service
 ########################################################
 resource "aws_ecs_service" "gale_broker_service" {
-  name = "gake-broker"
+  name = "gale-broker"
   cluster = aws_ecs_cluster.ecs_cluster.arn
   task_definition = aws_ecs_task_definition.gale_broker_service_task_def.arn
   desired_count = 1
@@ -88,7 +88,7 @@ resource "aws_ecs_service" "gale_broker_service" {
   }
   load_balancer {
     target_group_arn = aws_lb_target_group.gale_broker_service_tg.arn
-    container_name = "gake-broker"
+    container_name = "gale-broker"
     container_port = 8080
   }
 }
@@ -98,7 +98,7 @@ resource "aws_ecs_service" "gale_broker_service" {
 ########################################################
 # 4.1. Cloud Build
 resource "aws_codebuild_project" "gale_broker_container_builder" {
-  name          = format("%s-%s", "gake-broker", var.toto_env)
+  name          = format("%s-%s", "gale-broker", var.toto_env)
   service_role  = aws_iam_role.codebuild_role.arn
   build_timeout = "120"
 
@@ -117,7 +117,7 @@ resource "aws_codebuild_project" "gale_broker_container_builder" {
   # --- SOURCE CONFIGURATION (GitHub via CodeStar Connection) ---
   source {
     type     = "GITHUB"
-    location = "https://github.com/nicolasances/gake-broker.git"
+    location = "https://github.com/nicolasances/gale-broker.git"
     
     # CRITICAL: Path to the buildspec file in the repository
     buildspec = "aws/codebuild/buildspec-${var.toto_env}.yml"
@@ -142,7 +142,7 @@ resource "aws_codebuild_project" "gale_broker_container_builder" {
 # 4.2. CodePipeline
 # AWS CodePipeline Resource
 resource "aws_codepipeline" "gale_broker_ecs_pipeline" {
-  name     = "gake-broker-ecs-pipeline-${var.toto_env}"
+  name     = "gale-broker-ecs-pipeline-${var.toto_env}"
   role_arn = aws_iam_role.codepipeline_role.arn
 
   # Artifact store definition
@@ -164,7 +164,7 @@ resource "aws_codepipeline" "gale_broker_ecs_pipeline" {
 
       configuration = {
         ConnectionArn    = var.code_connection_arn
-        FullRepositoryId = "nicolasances/gake-broker"
+        FullRepositoryId = "nicolasances/gale-broker"
         BranchName       = var.toto_env == "prod" ? "prod" : "dev"
       }
     }
@@ -217,7 +217,7 @@ resource "aws_codepipeline" "gale_broker_ecs_pipeline" {
 #    This section creates the Target Group for this service.
 ########################################################
 resource "aws_lb_target_group" "gale_broker_service_tg" {
-  name = format("%s-tg-%s", "gake-broker", var.toto_env)
+  name = format("%s-tg-%s", "gale-broker", var.toto_env)
   port = 8080
   protocol = "HTTP"
   vpc_id = aws_vpc.toto_vpc.id
