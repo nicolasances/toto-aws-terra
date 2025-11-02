@@ -1,1 +1,2 @@
-.env
+# ignore any file whose name ends with .env anywhere in the repo
+*.env

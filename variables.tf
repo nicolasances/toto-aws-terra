@@ -54,3 +54,11 @@ variable "gale_broker_url" {
   description = "URL of the Gale Broker"
   type        = string
 }
+
+#########################################################
+# 6. Mongo Host 
+#########################################################
+variable "mongo_host" {
+  description = "MongoDB host for Gale Broker"
+  type        = string
+}
