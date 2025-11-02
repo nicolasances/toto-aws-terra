@@ -36,6 +36,10 @@ resource "aws_ecs_task_definition" "toto_ms_tome_scraper_service_task_def" {
           name = "ENVIRONMENT", 
           value = var.toto_env
         },
+        {
+          name = "AWS_REGION", 
+          value = var.aws_region
+        },
       ]
       entryPoint = [
         "sh", "-c", "gunicorn --bind 0.0.0.0:8080 app:app --enable-stdio-inheritance --timeout 3600 --workers=2"
