@@ -20,6 +20,13 @@ variable "aws_region" {
   default     = "eu-north-1"
 }
 
+variable "gcp_endpoint_suffix" {
+  description = "GCP Endpoint Suffix for Toto services"
+  type        = string
+  sensitive   = true
+  default     = ""
+}
+
 #########################################################
 # 2. Code Build
 #########################################################
