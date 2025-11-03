@@ -263,3 +263,15 @@ resource "aws_lb_listener_rule" "toto_ms_tome_scraper_alb_listener_rule_https" {
   }
 }
 
+########################################################
+# 6. Bucket
+########################################################
+resource "aws_s3_bucket" "toto_ms_tome_scraper_bucket" {
+  bucket = format("toto-tome-bucket-%s", var.toto_env)
+
+  tags = {
+    Name        = format("toto-tome-bucket-%s", var.toto_env)
+    Environment = var.toto_env
+    Project     = "tome"
+  }
+}
