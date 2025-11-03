@@ -10,3 +10,4 @@ export TF_VAR_gale_broker_url=https://api.prod.toto.nimoto.eu/galebroker
 export TF_VAR_gale_broker_mongo_user=
 export TF_VAR_gale_broker_mongo_pswd=
 export TF_VAR_mongo_host=
+export TF_VAR_gcp_endpoint_suffix=
