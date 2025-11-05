@@ -279,11 +279,11 @@ variable "tome_ms_topics_mongo_password" {
 
 # 6.1. Secrets Manager
 resource "aws_secretsmanager_secret" "tome_ms_topics_mongo_user_secret" {
-  name = format("%s/%s", "tome-ms-topics-mongo-user", var.toto_env)
+  name = format("%s/%s", var.toto_env, "tome-ms-topics-mongo-user")
   description = "Mongo User for the Tome MS Topics service in ${var.toto_env} environment"
 }
 resource "aws_secretsmanager_secret" "tome_ms_topics_mongo_password_secret" {
-  name = format("%s/%s", "tome-ms-topics-mongo-pswd", var.toto_env)
+  name = format("%s/%s", var.toto_env, "tome-ms-topics-mongo-pswd")
   description = "Mongo Password for the Tome MS Topics service in ${var.toto_env} environment"
 }
 
