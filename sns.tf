@@ -10,3 +10,17 @@ resource "aws_sns_topic_subscription" "tome_topics_tome_ms_topics_subscription" 
   protocol  = "https"
   endpoint  = "https://tome-ms-topics-${var.gcp_endpoint_suffix}/events/topic"
 }
+
+
+########################################################
+# 2. Topic names Secrets
+########################################################
+resource "aws_secretsmanager_secret" "topic_name_tometopics_secret" {
+  name        = format("%s/%s", var.toto_env, "tome_topics_topic_name")
+  description = "Secret for the name of the topic for events on Tome Topic"
+}
+
+resource "aws_secretsmanager_secret_version" "topic_name_tometopics_secret_version" {
+  secret_id     = aws_secretsmanager_secret.topic_name_tometopics_secret.id
+  secret_string = aws_sns_topic.tome_topics_topic.name
+}
