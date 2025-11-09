@@ -60,6 +60,10 @@ resource "aws_iam_role_policy_attachment" "ecs_task_role_bedrock_full_access" {
   role = aws_iam_role.toto_ecs_task_role.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonBedrockFullAccess"
 }
+resource "aws_iam_role_policy_attachment" "ecs_task_role_sns_full_access" {
+  role = aws_iam_role.toto_ecs_task_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonSNSFullAccess"
+}
 
 ########################################################
 # 2. Cluster
