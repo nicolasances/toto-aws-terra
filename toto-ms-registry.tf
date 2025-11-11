@@ -258,3 +258,36 @@ resource "aws_lb_listener_rule" "toto_ms_registry_alb_listener_rule_https" {
     target_group_arn = aws_lb_target_group.toto_ms_registry_service_tg.arn
   }
 }
+
+
+########################################################
+# 7. Secrets on AWS Secrets Manager
+########################################################
+variable "toto_ms_registry_mongo_user" {
+  description = "MongoDB user for Toto MS Registry"
+  type        = string
+  sensitive   = true
+}
+variable "toto_ms_registry_mongo_password" {
+  description = "MongoDB pswd for Toto MS Registry"
+  type        = string
+  sensitive   = true
+}
+
+resource "aws_secretsmanager_secret" "toto_ms_registry_mongo_user_secret" {
+  name = format("%s/%s", var.toto_env, "toto-ms-registry-mongo-user")
+  description = "MongoDB user for Toto MS Registry"
+}
+resource "aws_secretsmanager_secret_version" "toto_ms_registry_mongo_user_secret_version" {
+  secret_id     = aws_secretsmanager_secret.toto_ms_registry_mongo_user_secret.id
+  secret_string = var.toto_ms_registry_mongo_user
+}
+
+resource "aws_secretsmanager_secret" "toto_ms_registry_mongo_password_secret" {
+  name = format("%s/%s", var.toto_env, "toto-ms-registry-mongo-password")
+  description = "MongoDB pswd for Toto MS Registry"
+}
+resource "aws_secretsmanager_secret_version" "toto_ms_registry_mongo_password_secret_version" {
+  secret_id     = aws_secretsmanager_secret.toto_ms_registry_mongo_password_secret.id
+  secret_string = var.toto_ms_registry_mongo_password
+}
