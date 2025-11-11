@@ -13,3 +13,5 @@ export TF_VAR_mongo_host=
 export TF_VAR_gcp_endpoint_suffix=
 export TF_VAR_tome_ms_topics_mongo_user=
 export TF_VAR_tome_ms_topics_mongo_password=
+export TF_VAR_toto_ms_registry_mongo_user=
+export TF_VAR_toto_ms_registry_mongo_password=
