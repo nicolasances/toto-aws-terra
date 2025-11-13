@@ -36,6 +36,14 @@ resource "aws_ecs_task_definition" "toto_ms_registry_service_task_def" {
           name = "ENVIRONMENT", 
           value = var.toto_env
         },
+        {
+          name = "AWS_DOMAIN_NAME", 
+          value = var.domain_name
+        }, 
+        {
+          name = "GCP_CLOUD_RUN_SUFFIX",
+          value = var.gcp_endpoint_suffix
+        }
       ]
       entryPoint = [
         "sh", "-c", "npm run start"
