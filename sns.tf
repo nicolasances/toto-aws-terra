@@ -11,6 +11,12 @@ resource "aws_sns_topic_subscription" "tome_topics_tome_ms_topics_subscription" 
   endpoint  = "https://${var.domain_name}/tometopics/events/topic"
 }
 
+resource "aws_sns_topic_subscription" "tome_topics_tome_ms_agents_subscription" {
+  topic_arn = aws_sns_topic.tome_topics_topic.arn
+  protocol  = "https"
+  endpoint  = "https://${var.domain_name}/tomeagents/events/topic"
+}
+
 
 ########################################################
 # 2. Topic names Secrets
