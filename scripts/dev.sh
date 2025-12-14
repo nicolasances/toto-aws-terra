@@ -17,3 +17,5 @@ export TF_VAR_toto_ms_registry_mongo_user=
 export TF_VAR_toto_ms_registry_mongo_password=
 export TF_VAR_gale_playground_mongo_user=
 export TF_VAR_gale_playground_mongo_pswd=
+export TF_VAR_tome_ms_challenges_mongo_user=
+export TF_VAR_tome_ms_challenges_mongo_password=
