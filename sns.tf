@@ -27,15 +27,6 @@ resource "aws_secretsmanager_secret" "topic_name_tometopics_secret" {
 }
 resource "aws_secretsmanager_secret_version" "topic_name_tometopics_secret_version" {
   secret_id     = aws_secretsmanager_secret.topic_name_tometopics_secret.id
-  secret_string = aws_sns_topic.tome_topics_topic.name
-}
-# Tome Topics - Topic ARN
-resource "aws_secretsmanager_secret" "topic_id_tometopics_secret" {
-  name        = format("%s/%s", var.toto_env, "tome_topics_topic_id")
-  description = "Secret for the ARN of the topic for events on Tome Topic"
-}
-resource "aws_secretsmanager_secret_version" "topic_id_tometopics_secret_version" {
-  secret_id     = aws_secretsmanager_secret.topic_id_tometopics_secret.id
   secret_string = aws_sns_topic.tome_topics_topic.arn
 }
 
