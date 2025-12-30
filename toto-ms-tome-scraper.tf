@@ -42,7 +42,7 @@ resource "aws_ecs_task_definition" "toto_ms_tome_scraper_service_task_def" {
         },
       ]
       entryPoint = [
-        "sh", "-c", "gunicorn --bind 0.0.0.0:8080 app:app --enable-stdio-inheritance --timeout 3600 --workers=2"
+        "sh", "-c", "python app.py"
       ]
       cpu       = 1024
       memory    = 2048
