@@ -3,7 +3,7 @@
 ########################################################
 # 1.1. Task Execution Role
 resource "aws_iam_role" "toto_ecs_task_execution_role" {
-  name = format("toto-ecs-task-execution-role-%s", var.toto_environment)
+  name = format("toto-ecs-task-execution-role-%s", var.toto_env)
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -31,7 +31,7 @@ resource "aws_iam_role_policy_attachment" "ecs_task_execution_role_policy_attach
 # 1.2. Task Role
 # This is a generic role that ECS Microservices should use in the Task Definition
 resource "aws_iam_role" "toto_ecs_task_role" {
-  name = format("toto-ecs-task-role-%s", var.toto_environment)
+  name = format("toto-ecs-task-role-%s", var.toto_env)
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -60,12 +60,16 @@ resource "aws_iam_role_policy_attachment" "ecs_task_role_bedrock_full_access" {
   role = aws_iam_role.toto_ecs_task_role.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonBedrockFullAccess"
 }
+resource "aws_iam_role_policy_attachment" "ecs_task_role_sns_full_access" {
+  role = aws_iam_role.toto_ecs_task_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonSNSFullAccess"
+}
 
 ########################################################
 # 2. Cluster
 ########################################################
 resource "aws_ecs_cluster" "ecs_cluster" {
-  name = format("toto-%s", var.toto_environment)
+  name = format("toto-%s-cluster", var.toto_env)
 }
 
 resource "aws_ecs_cluster_capacity_providers" "ecs_cluster_capacity_providers" {
