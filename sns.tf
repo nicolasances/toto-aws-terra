@@ -8,7 +8,7 @@ resource "aws_sns_topic" "tome_topics_topic" {
 resource "aws_sns_topic_subscription" "tome_topics_tome_ms_topics_subscription" {
   topic_arn = aws_sns_topic.tome_topics_topic.arn
   protocol  = "https"
-  endpoint  = "https://${var.domain_name}/tometopics/events/topic"
+  endpoint  = "https://${var.domain_name}/tometopics/events"
 }
 
 resource "aws_sns_topic_subscription" "tome_topics_tome_ms_agents_subscription" {
