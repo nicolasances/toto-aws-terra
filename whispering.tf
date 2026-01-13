@@ -21,7 +21,7 @@ resource "aws_ecs_task_definition" "whispering_service_task_def" {
   execution_role_arn = aws_iam_role.toto_ecs_task_execution_role.arn
   task_role_arn = aws_iam_role.toto_ecs_task_role.arn
   cpu = 2048
-  memory = 2048
+  memory = 4096
   network_mode = "awsvpc"
   container_definitions = jsonencode([
     {
@@ -41,7 +41,7 @@ resource "aws_ecs_task_definition" "whispering_service_task_def" {
         "sh", "-c", "python app.py"
       ]
       cpu       = 2048
-      memory    = 2048
+      memory    = 4096
       essential = true
       portMappings = [
         {
