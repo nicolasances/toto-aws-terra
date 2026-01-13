@@ -20,7 +20,7 @@ resource "aws_ecs_task_definition" "whispering_service_task_def" {
   requires_compatibilities = ["FARGATE"]
   execution_role_arn = aws_iam_role.toto_ecs_task_execution_role.arn
   task_role_arn = aws_iam_role.toto_ecs_task_role.arn
-  cpu = 1024
+  cpu = 2048
   memory = 2048
   network_mode = "awsvpc"
   container_definitions = jsonencode([
