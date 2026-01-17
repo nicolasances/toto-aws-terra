@@ -90,7 +90,8 @@ resource "aws_ecs_task_definition" "whispering_job_task_def" {
       environment = [
         { name = "MODE", value = "job" },
         { name = "HYPERSCALER", value = "aws" },
-        { name = "ENVIRONMENT", value = var.toto_env }
+        { name = "ENVIRONMENT", value = var.toto_env }, 
+        { name = "S3_BUCKET_NAME", value = format("toto-whispering-%s", var.toto_env) }
       ]
 
       command = ["python", "app.py"]
@@ -306,3 +307,11 @@ resource "aws_lb_listener_rule" "whispering_alb_listener_rule_https" {
   }
 }
 
+# ###############################################################
+# Buckets
+# ###############################################################
+# S3 Bucket for Whispering
+resource "aws_s3_bucket" "whispering_bucket" {
+  bucket = "toto-whispering-${var.toto_env}"
+  force_destroy = true # Allows deletion even if objects exist (for tear-down)
+}
