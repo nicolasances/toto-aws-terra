@@ -15,6 +15,7 @@ resource "aws_ecr_repository" "whispering_ecr_private_repo" {
 ########################################################
 # 2. Task Definition
 ########################################################
+# As a Service
 resource "aws_ecs_task_definition" "whispering_service_task_def" {
   family = format("%s-%s", "whispering", var.toto_env)
   requires_compatibilities = ["FARGATE"]
@@ -63,6 +64,52 @@ resource "aws_ecs_task_definition" "whispering_service_task_def" {
     }
   ])
 }
+
+########################################################
+# Task Definition: as a JOB
+resource "aws_ecs_task_definition" "whispering_job_task_def" {
+  family                   = format("%s-%s-job", "whispering", var.toto_env)
+  requires_compatibilities = ["FARGATE"]
+  execution_role_arn       = aws_iam_role.toto_ecs_task_execution_role.arn
+  task_role_arn            = aws_iam_role.toto_ecs_task_role.arn
+  cpu                      = 2048
+  memory                   = 4096
+  network_mode             = "awsvpc"
+
+  container_definitions = jsonencode([
+    {
+      name      = "whispering"
+      image     = format(
+        "%s.dkr.ecr.%s.amazonaws.com/%s/%s:latest",
+        data.aws_caller_identity.current.account_id,
+        var.aws_region,
+        var.toto_env,
+        "whispering"
+      )
+
+      environment = [
+        { name = "MODE", value = "job" },
+        { name = "HYPERSCALER", value = "aws" },
+        { name = "ENVIRONMENT", value = var.toto_env }
+      ]
+
+      command = ["python", "app.py"]
+
+      essential = true
+
+      logConfiguration = {
+        logDriver = "awslogs"
+        options = {
+          awslogs-create-group  = "true"
+          awslogs-group         = format("/ecs/%s/%s-job", var.toto_env, "whispering")
+          awslogs-region        = var.aws_region
+          awslogs-stream-prefix = "ecs"
+        }
+      }
+    }
+  ])
+} 
+
 
 ########################################################
 # 3. Service
