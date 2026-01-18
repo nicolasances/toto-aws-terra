@@ -33,7 +33,7 @@ resource "aws_ecs_task_definition" "whispering_service_task_def" {
         { name = "HYPERSCALER", value = "aws" }, 
         { name = "ENVIRONMENT",  value = var.toto_env },
         { name = "WHISPERING_S3_BUCKET_NAME", value = format("toto-whispering-%s", var.toto_env) },
-        { name = "ECS_CLUSTER_NAME", value = aws_ecs_cluster.ecs_cluster.name },
+        { name = "ECS_CLUSTER_ARN", value = aws_ecs_cluster.ecs_cluster.arn },
         { name = "ECS_SUBNETS", value = join(",", [aws_subnet.toto_ecs_subnet_1.id, aws_subnet.toto_ecs_subnet_2.id]) },
         { name = "ECS_SECURITY_GROUP", value = aws_security_group.toto_loadbalancer_sg.id }
       ]
