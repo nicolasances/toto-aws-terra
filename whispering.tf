@@ -29,14 +29,10 @@ resource "aws_ecs_task_definition" "whispering_service_task_def" {
       name      = "whispering"
       image     = format("%s.dkr.ecr.%s.amazonaws.com/%s/%s:latest", data.aws_caller_identity.current.account_id, var.aws_region, var.toto_env, "whispering")
       environment = [
-        {
-            name = "HYPERSCALER", 
-            value = "aws"
-        }, 
-        {
-          name = "ENVIRONMENT", 
-          value = var.toto_env
-        },
+        { name = "MODE", value = "api" },
+        { name = "HYPERSCALER", value = "aws" }, 
+        { name = "ENVIRONMENT",  value = var.toto_env },
+        { name = "WHISPERING_S3_BUCKET_NAME", value = format("toto-whispering-%s", var.toto_env) }
       ]
       entryPoint = [
         "sh", "-c", "python app.py"
@@ -91,7 +87,7 @@ resource "aws_ecs_task_definition" "whispering_job_task_def" {
         { name = "MODE", value = "job" },
         { name = "HYPERSCALER", value = "aws" },
         { name = "ENVIRONMENT", value = var.toto_env }, 
-        { name = "S3_BUCKET_NAME", value = format("toto-whispering-%s", var.toto_env) }
+        { name = "WHISPERING_S3_BUCKET_NAME", value = format("toto-whispering-%s", var.toto_env) }
       ]
 
       command = ["python", "app.py"]
