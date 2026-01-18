@@ -32,6 +32,7 @@ resource "aws_ecs_task_definition" "whispering_service_task_def" {
         { name = "MODE", value = "api" },
         { name = "HYPERSCALER", value = "aws" }, 
         { name = "ENVIRONMENT",  value = var.toto_env },
+        { name = "AWS_REGION", value = var.aws_region },
         { name = "WHISPERING_S3_BUCKET_NAME", value = format("toto-whispering-%s", var.toto_env) },
         { name = "ECS_CLUSTER_ARN", value = aws_ecs_cluster.ecs_cluster.arn },
         { name = "ECS_SUBNETS", value = join(",", [aws_subnet.toto_ecs_subnet_1.id, aws_subnet.toto_ecs_subnet_2.id]) },
