@@ -65,6 +65,40 @@ resource "aws_iam_role_policy_attachment" "ecs_task_role_sns_full_access" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonSNSFullAccess"
 }
 
+# Policy to allow ECS tasks to run other ECS tasks (for whispering job triggering)
+resource "aws_iam_policy" "ecs_run_task_policy" {
+  name        = format("toto-ecs-run-task-policy-%s", var.toto_env)
+  description = "Allow ECS tasks to run other ECS tasks"
+  
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "ecs:RunTask"
+        ]
+        Resource = "*"
+      },
+      {
+        Effect = "Allow"
+        Action = [
+          "iam:PassRole"
+        ]
+        Resource = [
+          aws_iam_role.toto_ecs_task_execution_role.arn,
+          aws_iam_role.toto_ecs_task_role.arn
+        ]
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "ecs_task_role_run_task" {
+  role = aws_iam_role.toto_ecs_task_role.name
+  policy_arn = aws_iam_policy.ecs_run_task_policy.arn
+}
+
 ########################################################
 # 2. Cluster
 ########################################################

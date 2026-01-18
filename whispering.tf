@@ -15,6 +15,7 @@ resource "aws_ecr_repository" "whispering_ecr_private_repo" {
 ########################################################
 # 2. Task Definition
 ########################################################
+# As a Service
 resource "aws_ecs_task_definition" "whispering_service_task_def" {
   family = format("%s-%s", "whispering", var.toto_env)
   requires_compatibilities = ["FARGATE"]
@@ -28,14 +29,14 @@ resource "aws_ecs_task_definition" "whispering_service_task_def" {
       name      = "whispering"
       image     = format("%s.dkr.ecr.%s.amazonaws.com/%s/%s:latest", data.aws_caller_identity.current.account_id, var.aws_region, var.toto_env, "whispering")
       environment = [
-        {
-            name = "HYPERSCALER", 
-            value = "aws"
-        }, 
-        {
-          name = "ENVIRONMENT", 
-          value = var.toto_env
-        },
+        { name = "MODE", value = "api" },
+        { name = "HYPERSCALER", value = "aws" }, 
+        { name = "ENVIRONMENT",  value = var.toto_env },
+        { name = "AWS_REGION", value = var.aws_region },
+        { name = "WHISPERING_S3_BUCKET_NAME", value = format("toto-whispering-%s", var.toto_env) },
+        { name = "ECS_CLUSTER_ARN", value = aws_ecs_cluster.ecs_cluster.arn },
+        { name = "ECS_SUBNETS", value = join(",", [aws_subnet.toto_ecs_subnet_1.id, aws_subnet.toto_ecs_subnet_2.id]) },
+        { name = "ECS_SECURITY_GROUP", value = aws_security_group.toto_loadbalancer_sg.id }
       ]
       entryPoint = [
         "sh", "-c", "python app.py"
@@ -63,6 +64,53 @@ resource "aws_ecs_task_definition" "whispering_service_task_def" {
     }
   ])
 }
+
+########################################################
+# Task Definition: as a JOB
+resource "aws_ecs_task_definition" "whispering_job_task_def" {
+  family                   = format("%s-%s-job", "whispering", var.toto_env)
+  requires_compatibilities = ["FARGATE"]
+  execution_role_arn       = aws_iam_role.toto_ecs_task_execution_role.arn
+  task_role_arn            = aws_iam_role.toto_ecs_task_role.arn
+  cpu                      = 2048
+  memory                   = 4096
+  network_mode             = "awsvpc"
+
+  container_definitions = jsonencode([
+    {
+      name      = "whispering"
+      image     = format(
+        "%s.dkr.ecr.%s.amazonaws.com/%s/%s:latest",
+        data.aws_caller_identity.current.account_id,
+        var.aws_region,
+        var.toto_env,
+        "whispering"
+      )
+
+      environment = [
+        { name = "MODE", value = "job" },
+        { name = "HYPERSCALER", value = "aws" },
+        { name = "ENVIRONMENT", value = var.toto_env }, 
+        { name = "WHISPERING_S3_BUCKET_NAME", value = format("toto-whispering-%s", var.toto_env) }
+      ]
+
+      command = ["python", "app.py"]
+
+      essential = true
+
+      logConfiguration = {
+        logDriver = "awslogs"
+        options = {
+          awslogs-create-group  = "true"
+          awslogs-group         = format("/ecs/%s/%s-job", var.toto_env, "whispering")
+          awslogs-region        = var.aws_region
+          awslogs-stream-prefix = "ecs"
+        }
+      }
+    }
+  ])
+} 
+
 
 ########################################################
 # 3. Service
@@ -259,3 +307,11 @@ resource "aws_lb_listener_rule" "whispering_alb_listener_rule_https" {
   }
 }
 
+# ###############################################################
+# Buckets
+# ###############################################################
+# S3 Bucket for Whispering
+resource "aws_s3_bucket" "whispering_bucket" {
+  bucket = "toto-whispering-${var.toto_env}"
+  force_destroy = true # Allows deletion even if objects exist (for tear-down)
+}
