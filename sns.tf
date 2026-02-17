@@ -23,6 +23,12 @@ resource "aws_sns_topic_subscription" "tome_topics_tome_ms_scraper_subscription"
   endpoint  = "https://${var.domain_name}/tomescraper/events"
 }
 
+
+resource "aws_sns_topic" "supermarket_topic" {
+  name = format("supermarket-topic-%s", var.toto_env)
+}
+
+
 ########################################################
 # 2. Topic-related Secrets
 ########################################################
@@ -33,5 +39,14 @@ resource "aws_secretsmanager_secret" "topic_name_tometopics_secret" {
 resource "aws_secretsmanager_secret_version" "topic_name_tometopics_secret_version" {
   secret_id     = aws_secretsmanager_secret.topic_name_tometopics_secret.id
   secret_string = aws_sns_topic.tome_topics_topic.arn
+}
+
+resource "aws_secretsmanager_secret" "topic_name_supermarket_secret" {
+  name        = format("%s/%s", var.toto_env, "topic-name-supermarket")
+  description = "Secret for the name of the topic for events on Supermarket"
+}
+resource "aws_secretsmanager_secret_version" "topic_name_supermarket_secret_version" {
+  secret_id     = aws_secretsmanager_secret.topic_name_supermarket_secret.id
+  secret_string = aws_sns_topic.supermarket_topic.arn
 }
 
