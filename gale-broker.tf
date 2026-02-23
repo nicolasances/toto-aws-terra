@@ -332,3 +332,13 @@ resource "aws_secretsmanager_secret_version" "gale_broker_mongo_pswd_secret_vers
   secret_string = var.gale_broker_mongo_pswd
 }
 
+resource "aws_secretsmanager_secret" "gale_broker_queue_name_secret" {
+  name = format("%s/%s", var.toto_env, "topic-name-gale-agents")
+  description = "Name of Queue for Gale to use"
+}
+resource "aws_secretsmanager_secret_version" "gale_broker_queue_name_secret_version" {
+  secret_id     = aws_secretsmanager_secret.gale_broker_queue_name_secret.id
+  secret_string = aws_sqs_queue.gale_broker_queue.name
+}
+
+
