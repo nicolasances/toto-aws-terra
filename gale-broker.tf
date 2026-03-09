@@ -37,8 +37,8 @@ resource "aws_ecs_task_definition" "gale_broker_service_task_def" {
           value = var.toto_env
         },
         {
-          name = "SQS_QUEUE_URL",
-          value = aws_sqs_queue.gale_broker_queue.name
+          name = "AWS_REGION",
+          value = var.aws_region
         }
       ]
       entryPoint = [
@@ -265,17 +265,11 @@ resource "aws_lb_listener_rule" "gale_broker_alb_listener_rule_https" {
 
 
 ##############################################################
-# 6. SQS Queue
+# 6. SNS IAM Policy
 ##############################################################
-resource "aws_sqs_queue" "gale_broker_queue" {
-  name = format("%s-%s", "gale-broker", var.toto_env)
-  visibility_timeout_seconds = 300
-}
-
-# IAM Policy for SQS Access
-resource "aws_iam_policy" "gale_broker_sqs_policy" {
-  name        = format("%s-sqs-policy-%s", "gale-broker", var.toto_env)
-  description = "Allow ECS task to send and receive messages from gale-broker queue"
+resource "aws_iam_policy" "gale_broker_sns_policy" {
+  name        = format("%s-sns-policy-%s", "gale-broker", var.toto_env)
+  description = "Allow ECS task to publish to gale-agents SNS topic"
 
   policy = jsonencode({
     Version = "2012-10-17"
@@ -283,21 +277,17 @@ resource "aws_iam_policy" "gale_broker_sqs_policy" {
       {
         Effect = "Allow"
         Action = [
-          "sqs:SendMessage",
-          "sqs:ReceiveMessage",
-          "sqs:DeleteMessage",
-          "sqs:GetQueueAttributes",
-          "sqs:GetQueueUrl"
+          "sns:Publish"
         ]
-        Resource = aws_sqs_queue.gale_broker_queue.arn
+        Resource = aws_sns_topic.gale_agents_topic.arn
       }
     ]
   })
 }
 
-resource "aws_iam_role_policy_attachment" "gale_broker_sqs_policy_attachment" {
+resource "aws_iam_role_policy_attachment" "gale_broker_sns_policy_attachment" {
   role       = aws_iam_role.toto_ecs_task_role.name
-  policy_arn = aws_iam_policy.gale_broker_sqs_policy.arn
+  policy_arn = aws_iam_policy.gale_broker_sns_policy.arn
 }
 
 ########################################################
@@ -332,13 +322,13 @@ resource "aws_secretsmanager_secret_version" "gale_broker_mongo_pswd_secret_vers
   secret_string = var.gale_broker_mongo_pswd
 }
 
-resource "aws_secretsmanager_secret" "gale_broker_queue_name_secret" {
+resource "aws_secretsmanager_secret" "gale_broker_topic_arn_secret" {
   name = format("%s/%s", var.toto_env, "topic-name-gale-agents")
-  description = "Name of Queue for Gale to use"
+  description = "ARN of the SNS topic for Gale Agents"
 }
-resource "aws_secretsmanager_secret_version" "gale_broker_queue_name_secret_version" {
-  secret_id     = aws_secretsmanager_secret.gale_broker_queue_name_secret.id
-  secret_string = aws_sqs_queue.gale_broker_queue.name
+resource "aws_secretsmanager_secret_version" "gale_broker_topic_arn_secret_version" {
+  secret_id     = aws_secretsmanager_secret.gale_broker_topic_arn_secret.id
+  secret_string = aws_sns_topic.gale_agents_topic.arn
 }
 
 

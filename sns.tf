@@ -30,6 +30,20 @@ resource "aws_sns_topic" "supermarket_topic" {
 
 
 ########################################################
+# 3. Gale Agents Topic
+########################################################
+resource "aws_sns_topic" "gale_agents_topic" {
+  name = format("gale-agents-topic-%s", var.toto_env)
+}
+
+resource "aws_sns_topic_subscription" "gale_agents_gale_broker_subscription" {
+  topic_arn = aws_sns_topic.gale_agents_topic.arn
+  protocol  = "https"
+  endpoint  = "https://${var.domain_name}/galebroker/events"
+}
+
+
+########################################################
 # 2. Topic-related Secrets
 ########################################################
 resource "aws_secretsmanager_secret" "topic_name_tometopics_secret" {
